@@ -96,6 +96,39 @@ class Transform(object):
         return self.transform(points, scale)
 
 
+class ComposedTransform(Transform):
+    """Composed transform that turns multiple Transform objects into a net
+    tranform through composition.
+
+    Given two transforms t1 and t2, and a points x0, the following result in
+    the same transformed points x2:
+
+    >>> # Manual composition
+    >>> x1 = t1.transform(x0)
+    >>> x2 = t2.transform(x1)
+
+    >>> # With ComposedTransform
+    >>> t12 = ComposedTransform(t1, t2)
+    >>> x2 = t12.transform(x0)
+
+    """
+
+    def __init__(self, *transforms):
+        ndims = [x.ndim for x in transforms]
+        if not np.all(np.array(ndims) == ndims[0]):
+            raise ValueError('Number of dimensions for transforms {} do not '
+                             ' match: {}.'.format(', '.join(
+                                 tuple([x.__class__.__name__ for x in transforms])), ndims))
+        self.ndim = ndims[0]
+        self.transforms = transforms
+
+    def _transform_points(self, points):
+        points_copy = points.copy()
+        for transform in self.transforms:
+            points_copy = transform.transform(points_copy)
+        return points_copy
+
+
 class TranslationTransform(Transform):
     """Translation of points."""
 
@@ -265,7 +298,7 @@ def affine_matrix(center=None, shear_matrix=None, scaling=None,
         translation += center
         pre_translation[:ndim, -1] = -center
 
-    transform_matrix = np.zeros((ndim, ndim+1))
+    transform_matrix = np.zeros((ndim, ndim + 1))
     transform_matrix[:ndim, :ndim] = np.eye(ndim)
     mat = np.dot(rotation_matrix, np.dot(shear_matrix, scaling_matrix))
 

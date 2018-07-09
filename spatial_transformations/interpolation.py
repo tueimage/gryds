@@ -38,9 +38,9 @@ class Grid(object):
     def scaled_to(self, size):
         """
         Scale the grid to the given size, for example to fit an image size.
-        
+
         Args:
-            size (iterable): An iterable of length ndim for the shape of the 
+            size (iterable): An iterable of length ndim for the shape of the
                 grid.
         Returns:
             Grid: A scaled version of the grid.
@@ -62,7 +62,7 @@ class Grid(object):
     def transform(self, *transforms):
         """
         Transform the grid with a one or multiple transforms.
-        
+
         Args:
             transforms (*list): A list of Transform objects.
         Returns:
@@ -87,7 +87,7 @@ class Grid(object):
         Args:
             transforms (*list): A list of Transform objects.
         Returns:
-            np.array: An array of the size of the grid with the Jacobian 
+            np.array: An array of the size of the grid with the Jacobian
                 vectors, (i.e. ndim x Na x Nb x ... x ND)
         """
         new_grid = self.transform(*transforms)
@@ -100,7 +100,8 @@ class Grid(object):
                 padding = self.grid.shape[0] * [(0, 0)]
                 padding[j] = (0, 1)
                 jacobian[i, j] = np.pad(
-                    np.diff(new_grid.grid[i], axis=j), padding, mode='constant')
+                    np.diff(new_grid.grid[i], axis=j),
+                    padding, mode='constant')
         return jacobian
 
     def jacobian_det(self, *transforms):
@@ -111,7 +112,7 @@ class Grid(object):
         Args:
             *transforms (list): A list of Transform objects.
         Returns:
-            np.array: An array of the size of the grid with the Jacobian 
+            np.array: An array of the size of the grid with the Jacobian
                 determinant, (i.e. Na x ... x ND)
         """
         jac = self.jacobian(*transforms)
@@ -158,7 +159,7 @@ class Interpolator(object):
                                   **new_sampling_options)
 
     def resample(self, grid, **sampling_options):
-        """ 
+        """
         Reamples the image at a given grid.
 
         Args:
@@ -177,7 +178,7 @@ class Interpolator(object):
 
     def transform(self, *transforms, **sampling_options):
         """
-        Transforms the image by transforming the original image's grid and 
+        Transforms the image by transforming the original image's grid and
         resampling the image at the transformed grid.
 
         Args:

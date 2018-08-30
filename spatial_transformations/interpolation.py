@@ -12,7 +12,7 @@ from __future__ import division, print_function
 import numpy as np
 import scipy.ndimage as nd
 
-
+# This package assumes 32-bit floats for images and transformed grids everywhere
 DTYPE = 'float32'
 
 

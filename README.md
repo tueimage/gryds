@@ -36,7 +36,7 @@ transformed_image = interpolator.transform(bspline)
 
 ### Making many random transformations
 
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 import spatial_transformations as tr

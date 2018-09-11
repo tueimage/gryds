@@ -25,7 +25,7 @@ random_grid -= 0.5
 random_grid /= 5
 
 # Define a B-spline transformation object
-bspline = tr.BSplineTransform(random_grid)
+bspline = tr.BSplineTransformation(random_grid)
 
 # Define an interpolator object for the image:
 interpolator = tr.Interpolator(image)

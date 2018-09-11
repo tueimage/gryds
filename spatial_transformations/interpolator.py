@@ -19,25 +19,33 @@ class Interpolator(object):
     """An interpolator for an image, that can resample an image on a new grid,
     or transform an image."""
 
-    def __init__(self, image, **default_sampling_options):
+    def __init__(self, image, mode='constant', order=3, cval=0):
         """
         Args:
             image (np.array): An image array.
-            **default_sampling_options (dict): Sampling kwargs accepted by
-                scipy.ndimage.map_coordinates().
-
-            See https://docs.scipy.org/doc/scipy-0.14.0/reference/
-            generated/scipy.ndimage.interpolation.map_coordinates.html
+            order (int): The order of the B-spline. Default is 3. Use 0 for
+                binary images. Use 1 for normal linear interpolation.
+            mode (str): How edges of image domain should be treated when
+                transformed of 'constant', 'nearest', 'mirror', 'reflect',
+                'wrap'. Default is 'constant'. See https://docs.scipy.org/doc/
+                scipy-0.14.0/reference/generated/
+                scipy.ndimage.interpolation.map_coordinates.html for more
+                information about modes.
+            cval (numeric): Constant value for mode='constant'
+        Raises:
+            ValueError: If grid.shape[0] is not equal to grid.ndim -1
         """
         self.image = image
-        self.default_sampling_options = default_sampling_options
+        self.default_mode = mode
+        self.default_order = order
+        self.default_cval = cval
 
     @property
     def grid(self):
         """Returns the image's grid."""
         return Grid(shape=self.image.shape)
 
-    def sample(self, points, **sampling_options):
+    def sample(self, points, mode=None, order=None, cval=None):
         """
         Samples the image at given points.
 
@@ -48,13 +56,17 @@ class Interpolator(object):
         Returns:
             np.array: N-shaped array of intensities at the points.
         """
-        new_sampling_options = self.default_sampling_options.copy()
-        new_sampling_options.update(sampling_options)
+        new_mode = mode if mode else self.default_mode
+        new_order = order if order else self.default_order
+        new_cval = cval if cval else self.default_cval
+
         sample = nd.map_coordinates(self.image, points,
-                                    **new_sampling_options)
+                                    mode=new_mode,
+                                    order=new_order,
+                                    cval=new_cval)
         return sample.astype(DTYPE)
 
-    def resample(self, grid, **sampling_options):
+    def resample(self, grid, mode=None, order=None, cval=None):
         """
         Reamples the image at a given grid.
 
@@ -65,14 +77,14 @@ class Interpolator(object):
         Returns:
             np.array: The resampled image at the new grid.
         """
-        new_sampling_options = self.default_sampling_options.copy()
-        new_sampling_options.update(sampling_options)
-
         rescaled_grid = grid.scaled_to(self.image.shape)
-        new_image = self.sample(rescaled_grid.grid, **new_sampling_options)
+        new_image = self.sample(rescaled_grid.grid,
+                                mode=mode,
+                                order=order,
+                                cval=cval)
         return new_image.astype(DTYPE)
 
-    def transform(self, *transforms, **sampling_options):
+    def transform(self, *transforms, mode=None, order=None, cval=None):
         """
         Transforms the image by transforming the original image's grid and
         resampling the image at the transformed grid.
@@ -84,9 +96,8 @@ class Interpolator(object):
         Returns:
             np.array: The transformed image.
         """
-        new_sampling_options = self.default_sampling_options.copy()
-        new_sampling_options.update(sampling_options)
 
         transformed_grid = self.grid.transform(*transforms)
-        new_grid = self.resample(transformed_grid, **new_sampling_options)
+        new_grid = self.resample(transformed_grid,
+                                 mode=mode, order=order, cval=cval)
         return new_grid.astype(DTYPE)

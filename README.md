@@ -34,6 +34,27 @@ interpolator = tr.Interpolator(image)
 transformed_image = interpolator.transform(bspline)
 ```
 
-### Examples of our own augmentations, made using the package
+### Making many random transformations
+
+```
+import matplotlib.pyplot as plt
+import numpy as np
+import spatial_transformations as tr
+
+fig, ax = plt.subplots(5, 5, figsize=(15, 15));
+ax = ax.flatten()
+[x.set_axis_off() for x in ax];
+
+for i in range(25):
+    random_grid = np.random.rand(2, 3, 3) # Make a random 2D 3 x 3 grid
+    random_grid -= 0.5 # Move the displacements to the -0.5 to 0.5 grid
+    random_grid /= 5 # Scale the grid to -0.1 to 0.1 displacements
+
+    my_augmentation = tr.BSplineTransformation(random_grid)
+    my_augmented_image = my_image_interpolator.transform(my_augmentation)
+
+    ax[i].imshow(my_augmented_image)
+    plt.show()
+```
 
 ![](examples.png)

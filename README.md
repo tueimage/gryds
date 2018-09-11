@@ -9,7 +9,7 @@ This package enables you to make fast spatial transformations for the purpose of
     * Affine transformations (translation + rotation + arbitrary scaling + shearing)
 * `BSplineTransform`: deformable transformations for image warping
 
-which can be applied to `Interpolator` objects that wrap an image, and automatically perform B-spline interpolation. The package has been designed such that images of arbitrary dimensions (up from 2D) can be used, but it has only been extensively tested on 2D and 3D images.
+which can be applied to `Interpolator` objects that wrap an image, and automatically perform B-spline interpolation. The package has been designed such that images of arbitrary dimensions can be used, but it has only been extensively tested on 2D and 3D images.
 
 ### A minimal working example for randomly warping an image
 

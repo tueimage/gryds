@@ -19,7 +19,7 @@ class AffineTransformation(LinearTransformation):
     LinearTransformation, as this is merely a filling in of the linear
     transformation's matrix instance variable."""
 
-    def __init__(self, ndim, center=None, scaling=None,
+    def __init__(self, ndim, center=None, center_of=None, scaling=None,
                  angles=None, translation=None, shear_matrix=None):
         """
         Given a shear matrix G, a center c, a scaling s, angles a, and
@@ -44,6 +44,8 @@ class AffineTransformation(LinearTransformation):
             ValueError: If the number of elements in the shear_matrix, scaling,
             angles, and translation array do not match ndim.
         """
+        if center_of is not None:
+            center = _center_of(center_of)
         matrix = _affine_matrix(
             ndim=ndim, center=center, scaling=scaling, angles=angles,
             translation=translation, shear_matrix=shear_matrix
@@ -55,6 +57,11 @@ class AffineTransformation(LinearTransformation):
         augmented_points[:self.ndim] = points
         transformed_points = np.dot(self.parameters, augmented_points)
         return transformed_points[:self.ndim, :]
+
+
+def _center_of(image):
+    """Returns the center coordinate of an image, i.e. (shape - 1) / 2.
+    return [(x - 1) / (2. * x) for x in image.shape]
 
 
 def _affine_matrix(ndim, center=None, shear_matrix=None, scaling=None,

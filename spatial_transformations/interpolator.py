@@ -84,7 +84,7 @@ class Interpolator(object):
                                 cval=cval)
         return new_image.astype(DTYPE)
 
-    def transform(self, *transforms, mode=None, order=None, cval=None):
+    def transform(self, *transforms, **kwargs):
         """
         Transforms the image by transforming the original image's grid and
         resampling the image at the transformed grid.
@@ -96,6 +96,9 @@ class Interpolator(object):
         Returns:
             np.array: The transformed image.
         """
+        mode = kwargs['mode'] if 'mode' in kwargs else None
+        order = kwargs['order'] if 'order' in kwargs else None
+        cval = kwargs['cval'] if 'cval' in kwargs else None
 
         transformed_grid = self.grid.transform(*transforms)
         new_grid = self.resample(transformed_grid,

@@ -100,7 +100,7 @@ class Grid(object):
                 padding[j] = (0, 1)
                 jacobian[i, j] = np.pad(
                     np.diff(new_grid.grid[i], axis=j),
-                    padding, mode='constant')
+                    padding, mode='edge')
 
         assert jacobian.dtype == DTYPE
         return jacobian

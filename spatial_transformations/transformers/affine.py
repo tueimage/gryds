@@ -60,7 +60,7 @@ class AffineTransformation(LinearTransformation):
 
 
 def _center_of(image):
-    """Returns the center coordinate of an image, i.e. (shape - 1) / 2.
+    """Returns the center coordinate of an image, i.e. (shape - 1) / 2."""
     return [(x - 1) / (2. * x) for x in image.shape]
 
 

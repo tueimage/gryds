@@ -16,7 +16,7 @@ import numpy as np
 
 class LinearInterpolator(Interpolator):
 
-    def __init__(self, image):
+    def __init__(self, image, **kwargs):
         """
         Args:
             image (np.array): A 2D or 3D image array.
@@ -24,6 +24,8 @@ class LinearInterpolator(Interpolator):
         super(LinearInterpolator, self).__init__(
             image
         )
+        if kwargs:
+            print('Warning: ignored options: {}'.format(kwargs))
         if image.ndim == 2:
             self._sample = self.__sample2
         elif image.ndim == 3:
@@ -31,7 +33,7 @@ class LinearInterpolator(Interpolator):
         else:
             raise ValueError('Image should be 2D or 3D array.')
 
-    def sample(self, points):
+    def sample(self, points, **kwargs):
         """
         Samples the image at given points.
 
@@ -42,10 +44,12 @@ class LinearInterpolator(Interpolator):
         Returns:
             np.array: N-shaped array of intensities at the points.
         """
+        if kwargs:
+            print('Warning: ignored options: {}'.format(kwargs))
         p = points.transpose()
         return self._sample(*p)
 
-    def resample(self, grid):
+    def resample(self, grid, **kwargs):
         """
         Reamples the image at a given grid.
 
@@ -56,6 +60,8 @@ class LinearInterpolator(Interpolator):
         Returns:
             np.array: The resampled image at the new grid.
         """
+        if kwargs:
+            print('Warning: ignored options: {}'.format(kwargs))
         g = grid.scaled_to(self.image.shape).grid
         return self._sample(*g)
 

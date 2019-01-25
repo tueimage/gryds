@@ -8,6 +8,5 @@
 from __future__ import division, print_function, absolute_import
 
 from .transformers import *
-from .interpolator import Interpolator
-from .grid import Grid
+from .interpolators import *
 from .utils import dfm_show, dfm_opts

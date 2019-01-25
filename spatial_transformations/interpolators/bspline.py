@@ -11,11 +11,12 @@ from __future__ import division, print_function, absolute_import
 
 
 import scipy.ndimage as nd
-from .config import DTYPE
+from ..config import DTYPE
 from .grid import Grid
+from .base import Interpolator
 
 
-class Interpolator(object):
+class BSplineInterpolator(Interpolator):
     """An interpolator for an image, that can resample an image on a new grid,
     or transform an image."""
 
@@ -32,18 +33,13 @@ class Interpolator(object):
                 scipy.ndimage.interpolation.map_coordinates.html for more
                 information about modes.
             cval (numeric): Constant value for mode='constant'
-        Raises:
-            ValueError: If grid.shape[0] is not equal to grid.ndim -1
         """
-        self.image = image
+        super(BSplineInterpolator, self).__init__(
+            image
+        )
         self.default_mode = mode
         self.default_order = order
         self.default_cval = cval
-
-    @property
-    def grid(self):
-        """Returns the image's grid."""
-        return Grid(shape=self.image.shape)
 
     def sample(self, points, mode=None, order=None, cval=None):
         """

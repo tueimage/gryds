@@ -61,6 +61,7 @@ class BSplineTransformation(Transformation):
             order=order, mode=mode, cval=cval)
 
     def _transform_points(self, points):
+        assert points.dtype == DTYPE
         # Empty list for the interpolated B-spline grid's components.
         displacement = []
 

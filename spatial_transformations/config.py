@@ -8,4 +8,4 @@
 
 
 import numpy
-DTYPE = numpy.float64
+DTYPE = numpy.float32

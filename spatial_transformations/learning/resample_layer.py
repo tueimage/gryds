@@ -13,7 +13,7 @@ from lasagne.utils import as_tuple, floatX
 from lasagne.layers.base import Layer, MergeLayer
 
 __all__ = [
-    "TransformerLayer3D",
+    "ResampleLayer",
 ]
 
 
@@ -49,7 +49,6 @@ class ResampleLayer(MergeLayer):
 
 
 def resample(image, grid):
-
     X, Y, Z = grid[0, 0], grid[0, 1], grid[0, 2]
     X0 = T.cast(T.floor(X), 'int64')
     Y0 = T.cast(T.floor(Y), 'int64')
@@ -75,11 +74,11 @@ def resample(image, grid):
     b_x1y1z1 = image[0, 0, X1, Y1, Z1]
 
     b = (X1 - X) * (Y1 - Y) * (Z1 - Z) * b_x0y0z0 + \
-    (X - X0) * (Y1 - Y) * (Z1 - Z) * b_x1y0z0 + \
-    (X1 - X) * (Y - Y0) * (Z1 - Z) * b_x0y1z0 + \
-    (X - X0) * (Y - Y0) * (Z1 - Z) * b_x1y1z0 + \
-    (X1 - X) * (Y1 - Y) * (Z - Z0) * b_x0y0z1 + \
-    (X - X0) * (Y1 - Y) * (Z - Z0) * b_x1y0z1 + \
-    (X1 - X) * (Y - Y0) * (Z - Z0) * b_x0y1z1 + \
-    (X - X0) * (Y - Y0) * (Z - Z0) * b_x1y1z1
+        (X - X0) * (Y1 - Y) * (Z1 - Z) * b_x1y0z0 + \
+        (X1 - X) * (Y - Y0) * (Z1 - Z) * b_x0y1z0 + \
+        (X - X0) * (Y - Y0) * (Z1 - Z) * b_x1y1z0 + \
+        (X1 - X) * (Y1 - Y) * (Z - Z0) * b_x0y0z1 + \
+        (X - X0) * (Y1 - Y) * (Z - Z0) * b_x1y0z1 + \
+        (X1 - X) * (Y - Y0) * (Z - Z0) * b_x0y1z1 + \
+        (X - X0) * (Y - Y0) * (Z - Z0) * b_x1y1z1
     return b

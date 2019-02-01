@@ -16,13 +16,15 @@ from ..config import DTYPE
 class Grid(object):
     """Sampling grid that can be transformed."""
 
-    def __init__(self, shape=None):
+    def __init__(self, shape=None, grid=None):
         """
         Args:
             shape (iterable): an interable of length ndim for the shape of the
                 grid.
         """
-        if shape:
+        if grid is not None:
+            self.grid = grid.astype(DTYPE)
+        elif shape is not None:
             self.grid = np.array(np.meshgrid(
                 *[np.arange(d) / d for d in shape],
                 indexing='ij'
@@ -75,7 +77,6 @@ class Grid(object):
         new_grid_instance = Grid()
         new_grid_instance.grid = new_grid.reshape(org_shape)
 
-        assert new_grid_instance.grid.dtype == DTYPE
         return new_grid_instance
 
     def jacobian(self, *transforms):
@@ -102,8 +103,7 @@ class Grid(object):
                     np.diff(new_grid.grid[i], axis=j),
                     padding, mode='edge')
 
-        assert jacobian.dtype == DTYPE
-        return jacobian
+        return jacobian.astype(DTYPE)
 
     def jacobian_det(self, *transforms):
         """
@@ -121,5 +121,4 @@ class Grid(object):
 
         jacdet = np.linalg.det(jac)
 
-        assert jacdet.dtype == DTYPE
-        return jacdet
+        return jacdet.astype(DTYPE)

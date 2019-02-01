@@ -29,5 +29,4 @@ class TranslationTransformation(Transformation):
 
     def _transform_points(self, points):
         result = (points + self.parameters[:, None])
-        assert result.dtype == DTYPE
         return result

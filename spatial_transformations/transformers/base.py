@@ -68,19 +68,18 @@ class Transformation(object):
         Raises:
             ValueError: If the points and self.ndim are not compatible.
         """
-        points = np.array(points)
+        points = np.array(points, dtype=DTYPE)
 
         if not scale:
             scale = [1]
 
-        scale = np.array(scale)[:, None]
+        scale = np.array(scale, dtype=DTYPE)[:, None]
         scaled_points = points / scale
 
         self._dimension_check(scaled_points)
-        result = self._transform_points(scaled_points) * scale
+        result = self._transform_points(scaled_points).astype('float32') * scale
 
-        assert result.dtype == DTYPE
-        return result
+        return result.astype(DTYPE)
 
     def __call__(self, points, scale=None):
         """Calling the transformation as a function invokes the `transform`

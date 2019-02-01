@@ -27,6 +27,10 @@ class Interpolator(object):
         self.image = image
         self.grid = Grid(shape=self.image.shape)
 
+    @property
+    def shape(self):
+        return self.image.shape
+
     def sample(self, points, **kwargs):
         raise NotImplementedError()
 

@@ -88,9 +88,9 @@ class LinearInterpolator(Interpolator):
         return b
 
     def __sample3(self, X, Y, Z):
-        X0 = np.floor(X).astype('int')
-        Y0 = np.floor(Y).astype('int')
-        Z0 = np.floor(Z).astype('int')
+        X0 = np.floor(X).astype('int64')
+        Y0 = np.floor(Y).astype('int64')
+        Z0 = np.floor(Z).astype('int64')
         X1 = X0 + 1
         Y1 = Y0 + 1
         Z1 = Z0 + 1

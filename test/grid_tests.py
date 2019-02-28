@@ -156,9 +156,9 @@ if __name__ == '__main__':
     
     # test_rotation()
     test_bspline()
-    # test_bspline2()
+    test_bspline2()
 
-    # test_translation()
-    # test_rotation()
+    test_translation()
+    test_rotation()
 
-    # test_bspline_scaled_similarity()
+    test_bspline_scaled_similarity()

@@ -13,4 +13,4 @@ from .grid import Grid
 from .bspline import BSplineInterpolator
 from .linear import LinearInterpolator
 
-Interpolator = BSplineInterpolator
+Interpolator = BSplineInterpolator  # Default interpolator

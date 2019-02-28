@@ -2,12 +2,12 @@
 
 This package enables you to make fast spatial transformations for the purpose of data augmentation in deep learning. The supported spatial transformations are
 
-* `TranslationTransform`
-* `LinearTransform`, supporting
+* `TranslationTransformtion`
+* `LinearTransformation`, supporting
     * Rigid transformations (translation + rotation)
     * Similarity transformations (translation + rotation + isotropic scaling)
     * Affine transformations (translation + rotation + arbitrary scaling + shearing)
-* `BSplineTransform`: deformable transformations for image warping
+* `BSplineTransformation`: deformable transformations for image warping
 
 which can be applied to `Interpolator` objects that wrap an image, and automatically perform B-spline interpolation. The package has been designed such that images of arbitrary dimensions can be used, but it has only been extensively tested on 2D and 3D images.
 

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #
-# Transformations of points and grids of points
+# Interpolation code
 #
 # @author: Koen Eppenhof
 # @email: k.a.j.eppenhof@tue.nl

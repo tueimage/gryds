@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #
-# Transformations of points and grids of points
+# Resampling and concatenation of transformations for Theano
 #
 # @author: Koen Eppenhof
 # @email: k.a.j.eppenhof@tue.nl

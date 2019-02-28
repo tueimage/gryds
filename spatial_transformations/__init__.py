@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 #
+# Implement transformations of images, grids, and points
+#
 # @author: Koen Eppenhof
 # @email: k.a.j.eppenhof@tue.nl
 # @date: 2017/08/17

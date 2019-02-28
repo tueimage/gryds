@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/tueimage/Spatial-transformations",
     packages=[
         numpy, scipy
-    ]
+    ],
     classifiers=[
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",

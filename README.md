@@ -1,6 +1,6 @@
 # Spatial transformations for augmentations in deep learning
 
-This package enables you to make fast spatial transformations for the purpose of data augmentation in deep learning. The supported spatial transformations are
+This library enables you to make fast spatial transformations for the purpose of data augmentation in deep learning. The supported spatial transformations are
 
 * `TranslationTransformtion`
 * `LinearTransformation`, supporting
@@ -9,7 +9,26 @@ This package enables you to make fast spatial transformations for the purpose of
     * Affine transformations (translation + rotation + arbitrary scaling + shearing)
 * `BSplineTransformation`: deformable transformations for image warping
 
-which can be applied to `Interpolator` objects that wrap an image, and automatically perform B-spline interpolation. The package has been designed such that images of arbitrary dimensions can be used, but it has only been extensively tested on 2D and 3D images.
+which can be applied to `Interpolator` objects that wrap an image, and automatically perform (B-spline) interpolation. The library has been designed such that images of arbitrary dimensions can be used, but it has only been extensively tested on 2D and 3D images.
+
+The library works with both Python versions 2 (2.6 or higher) and 3.
+
+
+### Citation
+
+If you use this library in academic research, please cite the following paper:
+
+K.A.J. Eppenhof and J.P.W. Pluim, Plumonary CT Registration through Supervised Learning with Convolutional Neural Networks, IEEE Transactions on Medical Imaging, 2018
+
+
+### Installation
+
+Using `pip`, you can install from this repository:
+
+`pip install https://github.com/tueimage/Spatial-transformations`
+
+The library requires `numpy` and `scipy`. It has been tested on Python 2 with `numpy 1.13.3` and `scipy 0.19.1`, and on Python 3 with `numpy 1.15.4` and `scipy 1.2.0`.
+
 
 ### A minimal working example for randomly warping an image
 
@@ -32,29 +51,6 @@ interpolator = tr.Interpolator(image)
 
 # Transform the image using the B-spline transformation
 transformed_image = interpolator.transform(bspline)
-```
-
-### Making many random transformations
-
-```python
-import matplotlib.pyplot as plt
-import numpy as np
-import spatial_transformations as tr
-
-fig, ax = plt.subplots(5, 5, figsize=(15, 15));
-ax = ax.flatten()
-[x.set_axis_off() for x in ax];
-
-for i in range(25):
-    random_grid = np.random.rand(2, 3, 3) # Make a random 2D 3 x 3 grid
-    random_grid -= 0.5 # Move the displacements to the -0.5 to 0.5 grid
-    random_grid /= 5 # Scale the grid to -0.1 to 0.1 displacements
-
-    my_augmentation = tr.BSplineTransformation(random_grid)
-    my_augmented_image = my_image_interpolator.transform(my_augmentation)
-
-    ax[i].imshow(my_augmented_image)
-    plt.show()
 ```
 
 ![](examples.png)

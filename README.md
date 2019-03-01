@@ -1,4 +1,4 @@
-# Gryds: a Python package for geometric transformations for augmentations in deep learning
+# Gryds: a Python package for geometric transformations of images for data augmentation in deep learning
 
 This package enables you to make fast geometric transformations for the purpose of data augmentation in deep learning. The supported geometric transformations are
 

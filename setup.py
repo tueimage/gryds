@@ -6,7 +6,7 @@ setuptools.setup(
     version="0.0.1",
     author="Koen A. J. Eppenhof",
     author_email="k.a.j.eppenhof@tue.nl",
-    description="Gryds: a Python package for geometric transformations for augmentations in deep learning",
+    description="Gryds: a Python package for geometric transformations of images for data augmentation in deep learning",
     long_description="""
 Gryds enables you to make fast geometric transformations of images for the purpose of data augmentation in deep learning.
 The supported geometric transformations include translations, rigid transformations (translation + rotation),

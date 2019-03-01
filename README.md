@@ -25,7 +25,7 @@ K.A.J. Eppenhof and J.P.W. Pluim, Plumonary CT Registration through Supervised L
 
 Using `pip`, you can install from this repository:
 
-`pip install https://github.com/tueimage/Spatial-transformations`
+`pip install git+https://github.com/tueimage/Spatial-transformations`
 
 The library requires `numpy` and `scipy`. It has been tested on Python 2 with `numpy 1.13.3` and `scipy 0.19.1`, and on Python 3 with `numpy 1.15.4` and `scipy 1.2.0`.
 

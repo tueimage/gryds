@@ -1,17 +1,21 @@
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
 
 setuptools.setup(
-    name="spatial_transformations",
+    name="gryds",
     version="0.0.1",
     author="Koen A. J. Eppenhof",
     author_email="k.a.j.eppenhof@tue.nl",
-    description="Fast spatial transformations for data augmentation in deep learning",
-    long_description=long_description,
+    description="Gryds: a Python package for geometric transformations for augmentations in deep learning",
+    long_description="""
+Gryds enables you to make fast geometric transformations of images for the purpose of data augmentation in deep learning.
+The supported geometric transformations include translations, rigid transformations (translation + rotation),
+similarity transformations (translation + rotation + isotropic scaling),
+affine transformations (translation + rotation + arbitrary scaling + shearing),
+and deformable transformations (modeled as B-splines). It is also possible to apply the transformations to
+coordinates in the image domain, and to inspect the deformation vector field.""",
     long_description_content_type="text/markdown",
-    url="https://github.com/tueimage/Spatial-transformations",
+    url="https://github.com/tueimage/gryds",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 2.6",

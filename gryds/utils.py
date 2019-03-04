@@ -8,7 +8,7 @@
 
 
 import numpy as np
-DTYPE = numpy.float64
+DTYPE = np.float64
 
 
 def dvf_opts(dvf):

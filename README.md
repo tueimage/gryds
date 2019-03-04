@@ -90,7 +90,7 @@ bspline = gryds.BSplineTransformation(random_grid)
 # Define an interpolator object for the image:
 interpolator = gryds.Interpolator(image)
 
-# Transform the image using both transformations, applying the affine transformation first
+# Transform the image using both transformations. The B-spline is applied to the sampling grid first, and the affine transformation second. From the perspective of the image itself, the order will seem reversed (!). 
 transformed_image = interpolator.transform(bspline, affine)
 ```
 

@@ -1,3 +1,9 @@
+<div align="center">
+    <img src="logo.png" height="150" width="400"><br><br>
+</div>
+
+--------
+
 # Gryds: a Python package for geometric transformations of images for data augmentation in deep learning
 
 This package enables you to make fast geometric transformations of images for the purpose of data augmentation in deep learning. The supported geometric transformations are
@@ -68,6 +74,10 @@ transformed_image = interpolator.transform(bspline)
 
 ### Combining multiple transformations
 
+Simply add more transformations in the `transform()` method of the interpolator.
+Note that the transformations are applied to the grid, and that the order of the
+transformations therefore is reversed when reasoned from the image.
+
 ```python
 import numpy as np
 import gryds
@@ -97,4 +107,11 @@ interpolator = gryds.Interpolator(image)
 transformed_image = interpolator.transform(bspline, affine)
 ```
 
-![](examples.png)
+### Why does Gryds apply the inverse transformation to my images?
+
+Gryds applies the transformation to sampling grids (hence the name) that
+are super-imposed on the image. When you apply a transformation to an `Interpolation`
+object with the `transform()` method, the *image grid is transformed*. The transformed grid is then used to
+interpolate the resulting image. For example, if a transformation rotates a grid to anti-clockwise by 45°, the image will be rotated 45° clockwise. The follow example clarifies this:
+
+![](grid_examples.png)

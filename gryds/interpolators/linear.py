@@ -1,10 +1,12 @@
 #! /usr/bin/env python
 #
-# Resample images on a new Grid instance using B-spline interplation
+# Resample images on a new Grid instance using linear interplation
+# This class is mostly here to test pure linear interpolation implementations
+# but can be mostly ignored for standard code.
 #
 # @author: Koen Eppenhof
 # @email: k.a.j.eppenhof@tue.nl
-# @date: 2018/08/30
+# @date: 2018/11/30
 
 
 from __future__ import division, print_function, absolute_import
@@ -40,9 +42,8 @@ class LinearInterpolator(Interpolator):
         Samples the image at given points.
 
         Args:
-            points (np.array): An N x 2 array of points.
-            **sampling_options (dict): Sampling kwargs accepted by
-                scipy.ndimage.map_coordinates().
+            points (np.array): An N x ndims array of points.
+            **kwargs (dict): ignored
         Returns:
             np.array: N-shaped array of intensities at the points.
         """
@@ -57,8 +58,7 @@ class LinearInterpolator(Interpolator):
 
         Args:
             grid (Grid): The new grid.
-            **sampling_options (dict): Sampling kwargs accepted by
-                scipy.ndimage.map_coordinates().
+            **kwargs (dict): ignored
         Returns:
             np.array: The resampled image at the new grid.
         """

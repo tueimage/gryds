@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #
-# Transformation base class.
+# Transformation base class
 #
 # @author: Koen Eppenhof
 # @email: k.a.j.eppenhof@tue.nl

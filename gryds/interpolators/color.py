@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #
-# Resample images on a new Grid instance using B-spline interplation
+# Resample multi-channel images on a new Grid
 #
 # @author: Koen Eppenhof
 # @email: k.a.j.eppenhof@tue.nl
@@ -17,9 +17,22 @@ import numpy as np
 
 
 class MultiChannelInterpolator:
+    """Wrapper for an interpolator that is applied to each channel of a
+    multi-channel (e.g. color) image."""
 
     def __init__(self, image, interpolator=BSplineInterpolator,
             data_format='channels_last', cval=None, **kwargs):
+        """
+        Args:
+            image (np.array): An image array.
+            interpolator (Interpolator): The interpolator that will be applied.
+            data_format (str): The format of the multi-channel image. Options
+                are 'channels_last' (for [[[R,G,B]]] images)
+                and 'channels_first' (for [[[R]], [[G]], [[B]]] images).
+            cval (numeric): Constant value for mode='constant' if the wrapped
+                Interpolator class supports it.
+            **kwargs (dict): Options for the wrapped Interpolator class.
+        """
         self.image = image
         self.data_format = data_format
 
@@ -62,6 +75,16 @@ class MultiChannelInterpolator:
         return self.image.shape
 
     def sample(self, points, **kwargs):
+        """
+        Samples the image at given points.
+
+        Args:
+            points (np.array): An N x ndims array of points.
+            **kwargs (dict): redirected to wrapped Interpolator's sample() method
+        Returns:
+            np.array: nchan x N-shaped or N x nchan-shaped array of intensities
+                at the points (depending on data_format).
+        """
         if self.data_format == 'channels_last':
             return np.rollaxis(np.array([
                 x.sample(points, **kwargs) for x in self.interpolators
@@ -72,6 +95,15 @@ class MultiChannelInterpolator:
             ])
 
     def resample(self, grid, **kwargs):
+        """
+        Reamples the image at a given grid.
+
+        Args:
+            grid (Grid): The new grid.
+            **kwargs (dict): redirected to wrapped Interpolator's resample() method
+        Returns:
+            np.array: The resampled image at the new grid.
+        """
         if self.data_format == 'channels_last':
             return np.rollaxis(np.array([
                 x.resample(grid, **kwargs) for x in self.interpolators
@@ -82,6 +114,17 @@ class MultiChannelInterpolator:
             ])
 
     def transform(self, *transforms, **kwargs):
+        """
+        Transforms the image by transforming the original image's grid and
+        resampling the image at the transformed grid.
+
+        Args:
+            *transforms (list): A list of Transform objects.
+            **sampling_options (dict): Sampling kwargs accepted by
+                scipy.ndimage.map_coordinates().
+        Returns:
+            np.array: The transformed image.
+        """
         if self.data_format == 'channels_last':
             return np.rollaxis(np.array([
                 x.transform(*transforms, **kwargs) for x in self.interpolators

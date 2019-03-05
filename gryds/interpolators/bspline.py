@@ -17,7 +17,7 @@ from .base import Interpolator
 
 
 class BSplineInterpolator(Interpolator):
-    """An interpolator for an image, that can resample an image on a new grid,
+    """An interpolator for an image that can resample an image on a new grid,
     or transform an image."""
 
     def __init__(self, image, mode='constant', order=3, cval=0):
@@ -47,8 +47,15 @@ class BSplineInterpolator(Interpolator):
 
         Args:
             points (np.array): An N x ndims array of points.
-            **sampling_options (dict): Sampling kwargs accepted by
-                scipy.ndimage.map_coordinates().
+            order (int): The order of the B-spline. Default is 3. Use 0 for
+                binary images. Use 1 for normal linear interpolation.
+            mode (str): How edges of image domain should be treated when
+                transformed of 'constant', 'nearest', 'mirror', 'reflect',
+                'wrap'. Default is 'constant'. See https://docs.scipy.org/doc/
+                scipy-0.14.0/reference/generated/
+                scipy.ndimage.interpolation.map_coordinates.html for more
+                information about modes.
+            cval (numeric): Constant value for mode='constant'
         Returns:
             np.array: N-shaped array of intensities at the points.
         """
@@ -68,8 +75,15 @@ class BSplineInterpolator(Interpolator):
 
         Args:
             grid (Grid): The new grid.
-            **sampling_options (dict): Sampling kwargs accepted by
-                scipy.ndimage.map_coordinates().
+            order (int): The order of the B-spline. Default is 3. Use 0 for
+                binary images. Use 1 for normal linear interpolation.
+            mode (str): How edges of image domain should be treated when
+                transformed of 'constant', 'nearest', 'mirror', 'reflect',
+                'wrap'. Default is 'constant'. See https://docs.scipy.org/doc/
+                scipy-0.14.0/reference/generated/
+                scipy.ndimage.interpolation.map_coordinates.html for more
+                information about modes.
+            cval (numeric): Constant value for mode='constant'
         Returns:
             np.array: The resampled image at the new grid.
         """
@@ -87,8 +101,15 @@ class BSplineInterpolator(Interpolator):
 
         Args:
             *transforms (list): A list of Transform objects.
-            **sampling_options (dict): Sampling kwargs accepted by
-                scipy.ndimage.map_coordinates().
+            order (int): The order of the B-spline. Default is 3. Use 0 for
+                binary images. Use 1 for normal linear interpolation.
+            mode (str): How edges of image domain should be treated when
+                transformed of 'constant', 'nearest', 'mirror', 'reflect',
+                'wrap'. Default is 'constant'. See https://docs.scipy.org/doc/
+                scipy-0.14.0/reference/generated/
+                scipy.ndimage.interpolation.map_coordinates.html for more
+                information about modes.
+            cval (numeric): Constant value for mode='constant'
         Returns:
             np.array: The transformed image.
         """

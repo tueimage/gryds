@@ -17,7 +17,7 @@ The package works with both Python versions 2 (2.6 or higher) and 3. To get a fu
 
 If you use this package in academic research, please cite the following paper:
 
-K.A.J. Eppenhof and J.P.W. Pluim, Plumonary CT Registration through Supervised Learning with Convolutional Neural Networks, IEEE Transactions on Medical Imaging, 2018
+**[K.A.J. Eppenhof and J.P.W. Pluim, Plumonary CT Registration through Supervised Learning with Convolutional Neural Networks, IEEE Transactions on Medical Imaging, 2018](https://www.doi.org/10.1109/TMI.2018.2878316)**
 
 ```bibtex
 @article{EppenhofPluimTMI2018,

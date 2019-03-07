@@ -1,15 +1,19 @@
 from __future__ import absolute_import
 
+import sys
+import os
+
+sys.path.append(os.path.abspath('../gryds'))
+
 from unittest import TestCase
 import numpy as np
 import gryds
 DTYPE = gryds.DTYPE
 
 
-class TestInterpolator(TestCase):
-    """Tests grid initialization and scaling."""
-    
-    def test_2d_interpolator_90_deg_rotation(self):
+class TestBSplineInterpolator(TestCase):
+
+    def test_2d_bspline_interpolator_90_deg_rotation(self):
         image = np.array([
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
@@ -22,7 +26,7 @@ class TestInterpolator(TestCase):
         new_image = intp.transform(trf, mode='mirror').astype(DTYPE)
         np.testing.assert_almost_equal(image, new_image, decimal=4)
 
-    def test_2d_interpolator_45_deg_rotation(self):
+    def test_2d_bspline_interpolator_45_deg_rotation(self):
         image = np.array([
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],

@@ -1,5 +1,10 @@
 from __future__ import absolute_import
 
+import sys
+import os
+
+sys.path.append(os.path.abspath('../gryds'))
+
 from unittest import TestCase
 import numpy as np
 import gryds
@@ -63,3 +68,15 @@ class TestGrid(TestCase):
             np.array(6.3, dtype=DTYPE), # 7 x 9 / 10
             places=6
         )
+
+    def test_grid_repr(self):
+        a_grid = gryds.Grid((2, 2))
+        print(a_grid)
+        self.assertEqual(str(a_grid), 'gryds.interpolators.grid.Grid(\n\t[[[0.  0. ]\n\t  [0.5 0.5]]\n\t\n\t [[0.  0.5]\n\t  [0.  0.5]]]\n)')
+
+    def test_grid_init(self):
+        a_grid = gryds.Grid(grid=np.zeros((2, 10, 10)))
+
+    def test_grid_wrong_scale_shape(self):
+        a_grid = gryds.Grid((2, 2))
+        self.assertRaises(ValueError, a_grid.scaled_to, [1, 2, 3])

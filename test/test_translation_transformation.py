@@ -1,5 +1,10 @@
 from __future__ import absolute_import
 
+import sys
+import os
+
+sys.path.append(os.path.abspath('../gryds'))
+
 from unittest import TestCase
 import numpy as np
 import gryds

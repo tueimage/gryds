@@ -1,16 +1,21 @@
 from __future__ import absolute_import
 
+import sys
+import os
+
+sys.path.append(os.path.abspath('../gryds'))
+
 from unittest import TestCase
 import numpy as np
 import gryds
 DTYPE = gryds.DTYPE
 
 
-class TestAnisotropic(TestCase):
-    """Tests anisotropic scaling, and associated effect on grids and Jacobians"""
-
+class TestIsotropic(TestCase):
+    """Tests isotropic scaling, and associated effect on grids and Jacobians"""
+    
     def test_2d_downscaling(self):
-        trf = gryds.AffineTransformation(ndim=2, scaling=[1.5, 1]) # scale grid by 150% isotropically
+        trf = gryds.AffineTransformation(ndim=2, scaling=[1.5, 1.5]) # scale grid by 150% isotropically
 
         grid = gryds.Grid((10, 20))
         new_grid = grid.transform(trf)
@@ -28,15 +33,13 @@ class TestAnisotropic(TestCase):
         # scaling should have happened
         np.testing.assert_almost_equal(
             grid.jacobian_det(trf),
-            np.array(1.5, DTYPE), # i.e. 1.5*1.5
+            np.array(2.25, DTYPE), # i.e. 1.5*1.5
             decimal=4)
 
-    def test_5d_downscaling(self):
+    def test_5d_scaling(self):
         matrix = np.zeros((5, 6))
         for i in range(5):
-            matrix[i, i] = 1
-        matrix[2, 2] = 1.5
-
+            matrix[i, i] = 1.5
         trf = gryds.LinearTransformation(matrix) # scale grid by 150$ isotropically
 
         grid = gryds.Grid((2, 3, 4, 5, 6))
@@ -55,5 +58,5 @@ class TestAnisotropic(TestCase):
         # scaling should have happened
         np.testing.assert_almost_equal(
             grid.jacobian_det(trf),
-            np.array(1.5, DTYPE), # i.e. 1.5^5
+            np.array(7.59375, DTYPE), # i.e. 1.5^5
             decimal=4)

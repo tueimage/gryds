@@ -37,7 +37,7 @@ class Interpolator(object):
     def resample(self, points, **kwargs):
         raise NotImplementedError()
 
-    def transform(self, *transforms):
+    def transform(self, *transforms, **kwargs):
         transformed_grid = self.grid.transform(*transforms)
-        new_grid = self.resample(transformed_grid)
-        return new_grid.astype(DTYPE)
+        new_image = self.resample(transformed_grid, **kwargs)
+        return new_image.astype(DTYPE)

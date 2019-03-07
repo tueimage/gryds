@@ -49,7 +49,8 @@ class LinearInterpolator(Interpolator):
         """
         if kwargs:
             print('Warning: ignored options: {}'.format(kwargs))
-        p = points.transpose()
+        p = np.array(points)
+        print(p.shape)
         return self._sample(*p)
 
     def resample(self, grid, **kwargs):

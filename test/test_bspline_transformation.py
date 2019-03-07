@@ -1,13 +1,18 @@
 from __future__ import absolute_import
 
+import sys
+import os
+
+sys.path.append(os.path.abspath('../gryds'))
+
 from unittest import TestCase
 import numpy as np
 import gryds
 DTYPE = gryds.DTYPE
 
 
-class TestRotation(TestCase):
-    """Tests rotation, and associated effect on grids and Jacobians"""
+class TestBSplineTransformation(TestCase):
+    """Tests BSpline transformations, and associated effect on grids and Jacobians"""
 
     def test_translation_bspline_2d(self):
         bspline_grid = np.ones((2, 2, 2))
@@ -79,4 +84,8 @@ class TestRotation(TestCase):
 
         # The jacobian of this transformation should be below 0 everywhere
         self.assertTrue(np.all(grid.jacobian_det(trf) < 0))
+
+    def test_bspline_wrong_grid_size(self):
+        bspline_grid = np.random.rand(3, 10, 10)
+        self.assertRaises(ValueError, gryds.BSplineTransformation, bspline_grid)
 

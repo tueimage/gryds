@@ -1,5 +1,3 @@
-[ ] Add tests for ComposedTransformation
-
-[ ] Add tests for MultiChannelInterpolator
-
-[ ] Add tests for LinearInterpolator @lowpriority
+- [ ] Add tests for ComposedTransformation
+- [ ] Add tests for MultiChannelInterpolator
+- [ ] Add tests for LinearInterpolator @lowpriority

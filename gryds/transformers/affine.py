@@ -1,6 +1,12 @@
 #! /usr/bin/env python
 #
 # Affine transformation
+# For the sake of simplicity, the ND generalization does not exist for this
+# transformation, as it severely complicates the implementation.
+#
+# However, 4D affine transformations can be implemented by subclassing
+# LinearTransformation, or simply defining a LinearTransformation with the
+# appropriate transformation matrix.
 #
 # @author: Koen Eppenhof
 # @email: k.a.j.eppenhof@tue.nl

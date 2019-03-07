@@ -90,7 +90,7 @@ class Grid(object):
             np.array: An array of the size of the grid with the Jacobian
                 vectors, (i.e. ndim x Na x Nb x ... x ND)
         """
-        new_grid = self.transform(*transforms)
+        diff_grid = self.transform(*transforms).scaled_to(self.grid.shape[1:]).grid
         # scaled_grid = new_grid.scaled_to(self.grid.shape[1:])
         jacobian = np.zeros(
             (self.grid.shape[0], self.grid.shape[0]) + self.grid.shape[1:]
@@ -100,7 +100,7 @@ class Grid(object):
                 padding = self.grid.shape[0] * [(0, 0)]
                 padding[j] = (0, 1)
                 jacobian[i, j] = np.pad(
-                    np.diff(new_grid.grid[i], axis=j),
+                    np.diff(diff_grid[i], axis=j),
                     padding, mode='edge')
 
         return jacobian.astype(DTYPE)

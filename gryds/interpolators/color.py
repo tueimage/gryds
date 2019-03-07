@@ -32,16 +32,16 @@ class MultiChannelInterpolator:
             cval (numeric): Constant value for mode='constant' if the wrapped
                 Interpolator class supports it.
             **kwargs (dict): Options for the wrapped Interpolator class.
-        """
+        """        
         self.image = image
         self.data_format = data_format
 
-        n_channels = image.shape[-1] if data_format == 'channels_last' \
+        self.nchan = image.shape[-1] if data_format == 'channels_last' \
             else image.shape[0]
         if cval is not None:
-            assert len(cval) == n_channels
+            assert len(cval) == self.nchan
         else:
-            cval = n_channels * [0]
+            cval = self.nchan * [0]
 
         if data_format == 'channels_last':
             self.grid = Grid(shape=self.image.shape[:-1])
@@ -85,13 +85,15 @@ class MultiChannelInterpolator:
             np.array: nchan x N-shaped or N x nchan-shaped array of intensities
                 at the points (depending on data_format).
         """
+        cvals = kwargs.pop('cval', self.nchan * [0])
+
         if self.data_format == 'channels_last':
             return np.rollaxis(np.array([
-                x.sample(points, **kwargs) for x in self.interpolators
+                x.sample(points, cval=cval, **kwargs) for cval, x in zip(cvals, self.interpolators)
             ]), 0, self.image.ndim)
         if self.data_format == 'channels_first':    
             return np.array([
-                x.sample(points, **kwargs) for x in self.interpolators
+                x.sample(points, cval=cval, **kwargs) for cval, x in zip(cvals, self.interpolators)
             ])
 
     def resample(self, grid, **kwargs):
@@ -104,14 +106,9 @@ class MultiChannelInterpolator:
         Returns:
             np.array: The resampled image at the new grid.
         """
-        if self.data_format == 'channels_last':
-            return np.rollaxis(np.array([
-                x.resample(grid, **kwargs) for x in self.interpolators
-            ]), 0, self.image.ndim)
-        if self.data_format == 'channels_first':    
-            return np.array([
-                x.resample(grid, **kwargs) for x in self.interpolators
-            ])
+        rescaled_grid = grid.scaled_to(self.interpolators[0].image.shape)
+        return self.sample(rescaled_grid.grid,
+                           **kwargs)
 
     def transform(self, *transforms, **kwargs):
         """
@@ -125,11 +122,5 @@ class MultiChannelInterpolator:
         Returns:
             np.array: The transformed image.
         """
-        if self.data_format == 'channels_last':
-            return np.rollaxis(np.array([
-                x.transform(*transforms, **kwargs) for x in self.interpolators
-            ]), 0, self.image.ndim)
-        if self.data_format == 'channels_first':    
-            return np.array([
-                x.transform(*transforms, **kwargs) for x in self.interpolators
-            ])
+        transformed_grid = self.interpolators[0].grid.transform(*transforms)
+        return self.resample(transformed_grid, **kwargs)

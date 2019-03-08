@@ -40,7 +40,6 @@ class TestBSplineTransformation(TestCase):
         grid = gryds.Grid((3, 3, 3, 3, 3))
         new_grid = grid.transform(trf)
 
-        # print(new_grid)
         # The grid runs from 0 to 0.9 on the i-axis
         # Translation by 100% will mean that the i-axis will now run from 1 to 1.9
         np.testing.assert_equal(new_grid.grid[0, 0, 0], np.array(1, DTYPE))
@@ -63,8 +62,6 @@ class TestBSplineTransformation(TestCase):
         grid = gryds.Grid((10, 20))
         new_grid = grid.transform(trf)
 
-        # print(new_grid)
-        
         # The top left has been displaced by 10% or 0.1 pixels in the i-direction
         np.testing.assert_almost_equal(new_grid.grid[0, 0, 0], np.array(0.1, DTYPE))
 

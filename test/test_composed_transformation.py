@@ -48,8 +48,6 @@ class TestComposition(TestCase):
         trf = gryds.ComposedTransformation(trf2, trf1)
 
         new_image = intp.transform(trf)
-        print(image)
-        print(new_image)
         np.testing.assert_almost_equal(image, new_image, decimal=6)
    
     def test_rotation_translation(self):
@@ -70,8 +68,6 @@ class TestComposition(TestCase):
         trf = gryds.ComposedTransformation(trf1, trf2, trf3, trf4)
 
         new_image = intp.transform(trf)
-        print(image)
-        print(new_image)
         np.testing.assert_almost_equal(image, new_image, decimal=6)
 
     def test_incompatible_error(self):

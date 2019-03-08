@@ -71,7 +71,6 @@ class TestGrid(TestCase):
 
     def test_grid_repr(self):
         a_grid = gryds.Grid((2, 2))
-        print(a_grid)
         self.assertEqual(str(a_grid), 'gryds.interpolators.grid.Grid(\n\t[[[0.  0. ]\n\t  [0.5 0.5]]\n\t\n\t [[0.  0.5]\n\t  [0.  0.5]]]\n)')
 
     def test_grid_init(self):

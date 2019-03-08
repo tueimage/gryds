@@ -44,7 +44,7 @@ The package requires `numpy` and `scipy`. It has been tested on Python 2 with `n
 
 ### Tutorial
 
-A Jupyter notebook that covers most of the available transformations and interpolations is available [here](notebooks/tutorial.ipynb).
+A Jupyter notebook that covers most of the available transformations and interpolations is available [here](https://nbviewer.jupyter.org/github/tueimage/gryds/blob/master/notebooks/tutorial.ipynb).
 
 ### A minimal working example for randomly warping an image
 

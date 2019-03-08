@@ -31,6 +31,13 @@ class ComposedTransformation(Transformation):
     """
 
     def __init__(self, *transformations):
+        """
+        Args:
+            transformations (iterable): A sequence (list, tuple) of transformations.
+        Raises:
+            ValueError: If the number of dimenions the transformations operate
+                on are not the same.
+        """
         ndims = [x.ndim for x in transformations]
         if not np.all(np.array(ndims) == ndims[0]):
             raise ValueError('Number of dimensions for transformations {} do not '

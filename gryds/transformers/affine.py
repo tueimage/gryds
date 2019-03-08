@@ -44,7 +44,6 @@ class AffineTransformation(LinearTransformation):
             translation (np.array): The (ndim) array of translation.
             center (np.array): The (ndim) array of the center of rotation in
                 relative coordinates (i.e. in the [0, 1)^ndim domain.
-
         Raises:
             ValueError: If the number of angles is not 1 or 3.
             ValueError: If the number of elements in the shear_matrix, scaling,
@@ -82,11 +81,12 @@ def _affine_matrix(ndim, center=None, shear_matrix=None, scaling=None,
         translation (np.array): The (ndim) array of translation.
         center (np.array): The (ndim) array of the center of rotation in
             relative coordinates (i.e. in the [0, 1)^ndim domain.
-
     Raises:
         ValueError: If the number of angles is not 1 or 3.
         ValueError: If the number of elements in the shear_matrix, scaling,
             angles, and translation array do not match ndim.
+    Warnings:
+        When shear_matrix contains a scaling components (i.e. determinant != 0).
     """
     if angles is not None:
         angles = np.array(angles, dtype=DTYPE)

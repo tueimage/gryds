@@ -23,7 +23,6 @@ class LinearTransformation(Transformation):
             matrix (np.array): An (ndim ) x (ndim + 1) array
                 representing the augmented affine matrix, where ndim is either
                 2 or 3.
-
         Raises:
             ValueError: If the matrix is not shaped correctly.
         """

@@ -41,6 +41,9 @@ class Grid(object):
         Args:
             size (iterable): An iterable of length ndim for the shape of the
                 grid.
+        Raises:
+            ValueError: when the number of dimensions and size parameters
+                do not match.
         Returns:
             Grid: A scaled version of the grid.
         """

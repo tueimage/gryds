@@ -29,7 +29,7 @@ class LinearInterpolator(Interpolator):
             image
         )
         if kwargs:
-            print('Warning: ignored options: {}'.format(kwargs))
+            print('WARNING: ignored options: {}'.format(kwargs))
         if image.ndim == 2:
             self._sample = self.__sample2
         elif image.ndim == 3:
@@ -48,9 +48,8 @@ class LinearInterpolator(Interpolator):
             np.array: N-shaped array of intensities at the points.
         """
         if kwargs:
-            print('Warning: ignored options: {}'.format(kwargs))
+            print('WARNING: ignored options: {}'.format(kwargs))
         p = np.array(points)
-        print(p.shape)
         return self._sample(*p)
 
     def resample(self, grid, **kwargs):
@@ -64,7 +63,7 @@ class LinearInterpolator(Interpolator):
             np.array: The resampled image at the new grid.
         """
         if kwargs:
-            print('Warning: ignored options: {}'.format(kwargs))
+            print('WARNING: ignored options: {}'.format(kwargs))
         g = grid.scaled_to(self.image.shape).grid
         return self._sample(*g)
 

@@ -32,6 +32,9 @@ class MultiChannelInterpolator:
             cval (numeric): Constant value for mode='constant' if the wrapped
                 Interpolator class supports it.
             **kwargs (dict): Options for the wrapped Interpolator class.
+        Raises:
+            ValueError: when the data_format is something other than
+                'channels_first' or 'channels_last'.
         """        
         self.image = image
         self.data_format = data_format

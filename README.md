@@ -32,7 +32,7 @@ If you use this package in academic research, please cite the following paper:
 }
 ```
 
-We used this package for this paper to create all transformations of images, both the augmentation and learned transformations.
+For this paper, we used the code in this repository to create the training set of images.
 
 ### Installation
 
@@ -42,6 +42,9 @@ Using `pip`, you can install from this repository:
 
 The package requires `numpy` and `scipy`. It has been tested on Python 2 with `numpy 1.13.3` and `scipy 0.19.1`, and on Python 3 with `numpy 1.15.4` and `scipy 1.2.0`.
 
+### Tutorial
+
+A Jupyter notebook that covers most of the available transformations and interpolations is available [here](notebooks/tutorial.ipynb).
 
 ### A minimal working example for randomly warping an image
 

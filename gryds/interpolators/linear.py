@@ -3,10 +3,6 @@
 # Resample images on a new Grid instance using linear interplation
 # This class is mostly here to test pure linear interpolation implementations
 # but can be mostly ignored for standard code.
-#
-# @author: Koen Eppenhof
-# @email: k.a.j.eppenhof@tue.nl
-# @date: 2018/11/30
 
 
 from __future__ import division, print_function, absolute_import

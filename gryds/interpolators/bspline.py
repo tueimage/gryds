@@ -1,10 +1,6 @@
 #! /usr/bin/env python
 #
 # Resample images on a new Grid instance using B-spline interplation
-#
-# @author: Koen Eppenhof
-# @email: k.a.j.eppenhof@tue.nl
-# @date: 2018/08/30
 
 
 from __future__ import division, print_function, absolute_import

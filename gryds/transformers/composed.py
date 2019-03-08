@@ -1,10 +1,6 @@
 #! /usr/bin/env python
 #
 # Composed transformations combine multiple transform objects into one
-#
-# @author: Koen Eppenhof
-# @email: k.a.j.eppenhof@tue.nl
-# @date: 2018/08/30
 
 
 from __future__ import division, print_function, absolute_import

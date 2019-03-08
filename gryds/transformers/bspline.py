@@ -44,18 +44,6 @@ class BSplineTransformation(Transformation):
             parameters=grid
         )
 
-    @classmethod
-    def from_deformation_field(cls, field, order=3, mode='mirror', cval=0):
-        """Start from a given deformation field.
-
-        TODO: check if this makes a difference.
-        """
-        padding = [(0, 0)]
-        for i in range(1, field.ndim):
-            padding.append((0, 1))
-        return cls(grid=np.pad(field, padding, mode='constant'),
-            order=order, mode=mode, cval=cval)
-
     def _transform_points(self, points):
         assert points.dtype == DTYPE
         # Empty list for the interpolated B-spline grid's components.

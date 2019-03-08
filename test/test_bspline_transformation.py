@@ -85,4 +85,3 @@ class TestBSplineTransformation(TestCase):
     def test_bspline_wrong_grid_size(self):
         bspline_grid = np.random.rand(3, 10, 10)
         self.assertRaises(ValueError, gryds.BSplineTransformation, bspline_grid)
-

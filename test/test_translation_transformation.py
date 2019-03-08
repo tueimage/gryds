@@ -50,3 +50,5 @@ class TestTranslation(TestCase):
             np.array(1, DTYPE),
             decimal=4)
 
+    def doet_niks(self):
+        pass

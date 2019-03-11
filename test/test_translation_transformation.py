@@ -49,6 +49,3 @@ class TestTranslation(TestCase):
             grid.jacobian_det(trf),
             np.array(1, DTYPE),
             decimal=4)
-
-    def doet_niks(self):
-        pass

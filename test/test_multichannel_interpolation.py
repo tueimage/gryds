@@ -120,3 +120,8 @@ class TestMultiChannelInterpolator(TestCase):
         ]], dtype=DTYPE).transpose(1, 2, 0)
         intp = gryds.MultiChannelInterpolator(image, gryds.LinearInterpolator, data_format='channels_last', cval=[0, 0, 0])
         self.assertEqual(intp.shape, (5, 5, 3))
+
+    def test_repr(self):
+        self.assertEqual(
+            str(gryds.MultiChannelInterpolator(np.random.rand(3, 20, 20))),
+            'MultiChannelInterpolator(2D, channels_last)')

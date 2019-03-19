@@ -26,6 +26,9 @@ class Interpolator(object):
         self.image = image
         self.grid = Grid(shape=self.image.shape)
 
+    def __repr__(self):
+        return '{}({}D)'.format(self.__class__.__name__, self.image.ndim)
+
     @property
     def shape(self):
         return self.image.shape

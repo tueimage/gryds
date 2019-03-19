@@ -130,4 +130,6 @@ class TestRotation(TestCase):
         self.assertRaises(ValueError, gryds.AffineTransformation, ndim=2, translation=[1, 2, 3]) 
         # Should raise a ValueError for number of translation components not agreeing with ndim
 
+    def test_repr(self):
+        self.assertEqual(str(gryds.AffineTransformation(2, angles=[0.4])), 'AffineTransformation(2D)')
 

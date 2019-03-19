@@ -38,7 +38,10 @@ class ComposedTransformation(Transformation):
         Raises:
             ValueError: If the number of dimenions the transformations operate
                 on are not the same.
+            ValueError: If transformations is empty.
         """
+        if not transformations or len(transformations) == 0:
+            raise ValueError('No transformations supplied.')
         ndims = [x.ndim for x in transformations]
         if not np.all(np.array(ndims) == ndims[0]):
             raise ValueError('Number of dimensions for transformations {} do not '
@@ -47,6 +50,10 @@ class ComposedTransformation(Transformation):
                              ), ndims))
         self.ndim = ndims[0]
         self.transformations = transformations
+
+    def __repr__(self):
+        return '{}({}D, {})'.format(self.__class__.__name__, self.ndim,
+            '∘'.join([str(x) for x in self.transformations]))
 
     def _transform_points(self, points):
         points_copy = points.copy()

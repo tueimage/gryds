@@ -13,7 +13,7 @@ class Grid(object):
     """Sampling grid that can be transformed.
 
     Attributes:
-        self.grid (nd.array): The grid as a ndim x Ni x Nj x ... x Nndim array
+        self.grid (nd.array): The grid as an ndim x Ni x Nj x ... x Nndim array
     """
 
     def __init__(self, shape=None, grid=None):
@@ -21,18 +21,24 @@ class Grid(object):
         Args:
             shape (iterable): an interable of length ndim for the shape of the
                 grid.
+            grid (np.ndarray): a pre-defined grid as an ndim x Ni x Nj x ... x Nndim array
+
+        Raises:
+            ValueError: when neither the shape or the grid are defined.
         """
-        if grid is not None:
+        if grid is not None and shape is None:
             self.grid = grid.astype(DTYPE)
-        elif shape is not None:
+        elif shape is not None and grid is None:
             self.grid = np.array(np.meshgrid(
                 *[np.arange(d) / d for d in shape],
                 indexing='ij'
             ), dtype=DTYPE)
+        else:
+            raise ValueError('Either the shape or the grid parameters should be defined')
 
     def __repr__(self):
-        return self.__module__ + '.' + self.__class__.__name__ + \
-            '(\n\t' + '\n\t'.join(str(self.grid).split('\n')) + '\n)'
+        return '{}({}D, {})'.format(self.__class__.__name__, self.grid.shape[0],
+            'x'.join([str(x) for x in self.grid.shape[1:]]))
 
     def scaled_to(self, size):
         """
@@ -55,10 +61,9 @@ class Grid(object):
             )
         size = np.array(size)
 
-        new_grid_instance = Grid()
-        new_grid_instance.grid = np.array(
+        new_grid_instance = Grid(grid=np.array(
             [x * y for x, y in zip(size, self.grid)], dtype=DTYPE
-        )
+        ))
         return new_grid_instance
 
     def transform(self, *transforms):
@@ -77,8 +82,7 @@ class Grid(object):
             rshp_grid = new_grid.reshape(self.grid.shape[0], -1)
             new_grid = transform(rshp_grid)
 
-        new_grid_instance = Grid()
-        new_grid_instance.grid = new_grid.reshape(org_shape)
+        new_grid_instance = Grid(grid=new_grid.reshape(org_shape))
 
         return new_grid_instance
 

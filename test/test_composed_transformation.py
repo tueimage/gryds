@@ -75,3 +75,12 @@ class TestComposition(TestCase):
         trf2 = gryds.TranslationTransformation([-0.1, 0])
 
         self.assertRaises(ValueError, gryds.ComposedTransformation, trf2, trf1)
+
+    def test_repr(self):
+        bsp = gryds.BSplineTransformation(np.random.rand(2, 3, 4))
+        self.assertEqual(str(gryds.ComposedTransformation(bsp, bsp)),
+            'ComposedTransformation(2D, BSplineTransformation(2D, 3x4)∘BSplineTransformation(2D, 3x4))'
+        )
+
+    def test_no_transformations_supplied(self):
+        self.assertRaises(ValueError, gryds.ComposedTransformation)

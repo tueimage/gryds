@@ -28,6 +28,9 @@ class TranslationTransformation(Transformation):
             parameters=np.array(translation)
         )
 
+    def __repr__(self):
+        return '{}({}D, t={})'.format(self.__class__.__name__, self.ndim, self.parameters)
+
     def _transform_points(self, points):
         result = (points + self.parameters[:, None])
         return result

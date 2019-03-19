@@ -34,3 +34,9 @@ class TestBaseInterpolator(TestCase):
         im = np.random.rand(10, 10, 10, 10, 10)
         intp = gryds.base.Interpolator(im)
         self.assertRaises(NotImplementedError, intp.transform, trf)
+
+    def test_repr(self):
+        self.assertEqual(
+            str(gryds.base.Interpolator(np.random.rand(20, 20))),
+            'Interpolator(2D)'
+        )

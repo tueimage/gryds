@@ -71,11 +71,14 @@ class TestGrid(TestCase):
 
     def test_grid_repr(self):
         a_grid = gryds.Grid((2, 2))
-        self.assertEqual(str(a_grid), 'gryds.interpolators.grid.Grid(\n\t[[[0.  0. ]\n\t  [0.5 0.5]]\n\t\n\t [[0.  0.5]\n\t  [0.  0.5]]]\n)')
+        self.assertEqual(str(a_grid), 'Grid(2D, 2x2)')
 
     def test_grid_init(self):
-        a_grid = gryds.Grid(grid=np.zeros((2, 10, 10)))
+        gryds.Grid(grid=np.zeros((2, 10, 10)))
 
     def test_grid_wrong_scale_shape(self):
         a_grid = gryds.Grid((2, 2))
         self.assertRaises(ValueError, a_grid.scaled_to, [1, 2, 3])
+
+    def test_no_grid_no_shape(self):
+        self.assertRaises(ValueError, gryds.Grid)

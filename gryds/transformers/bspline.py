@@ -53,6 +53,10 @@ class BSplineTransformation(Transformation):
             parameters=grid
         )
 
+    def __repr__(self):
+        return '{}({}D, {})'.format(self.__class__.__name__, self.ndim,
+            'x'.join([str(x) for x in self.parameters.shape[1:]]))
+
     def _transform_points(self, points):
         assert points.dtype == DTYPE
         # Empty list for the interpolated B-spline grid's components.

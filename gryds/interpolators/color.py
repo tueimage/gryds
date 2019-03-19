@@ -77,6 +77,10 @@ class MultiChannelInterpolator:
                              'should be either'
                              ' \'channels_first\' or \'channels_last\'.')
 
+    def __repr__(self):
+        return '{}({}D, {})'.format(
+            self.__class__.__name__, self.image.ndim - 1, self.data_format)
+
     @property
     def shape(self):
         return self.image.shape

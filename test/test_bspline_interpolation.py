@@ -45,3 +45,6 @@ class TestBSplineInterpolator(TestCase):
         trf = gryds.AffineTransformation(ndim=2, angles=[np.pi/4.], center=[0.4, 0.4])
         new_image = intp.transform(trf).astype(DTYPE)
         np.testing.assert_almost_equal(expected, new_image, decimal=4)
+
+    def test_repr(self):
+        self.assertEqual(str(gryds.BSplineTransformation(np.random.rand(2, 5, 7))), 'BSplineTransformation(2D, 5x7)')

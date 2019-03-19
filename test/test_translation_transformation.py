@@ -49,3 +49,6 @@ class TestTranslation(TestCase):
             grid.jacobian_det(trf),
             np.array(1, DTYPE),
             decimal=4)
+
+    def test_repr(self):
+        self.assertEqual(str(gryds.TranslationTransformation([3, 4])), 'TranslationTransformation(2D, t=[3 4])')

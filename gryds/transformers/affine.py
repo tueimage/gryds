@@ -22,6 +22,10 @@ class AffineTransformation(LinearTransformation):
     transformation's matrix instance variable.
 
     Attributes:
+        ndim (int): The number of dimensions.
+        parameters (np.ndarray): An (ndim ) x (ndim + 1) array
+            representing the augmented affine matrix, where ndim is either
+            2 or 3.
     """
 
     def __init__(self, ndim, center=None, center_of=None, scaling=None,

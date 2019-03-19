@@ -36,6 +36,9 @@ class Transformation(object):
         self.ndim = ndim
         self.parameters = parameters
 
+    def __repr__(self):
+        return '{}({}D)'.format(self.__class__.__name__, self.ndim)
+
     def _dimension_check(self, points):
         """Checks if the points are compatible with the number of dimensions
         in the transformation.

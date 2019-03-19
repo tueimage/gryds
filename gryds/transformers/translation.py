@@ -11,7 +11,12 @@ from .base import Transformation
 
 
 class TranslationTransformation(Transformation):
-    """Translation of points."""
+    """Translation of points.
+
+    Attributes:
+        ndim (int): The number of dimensions.
+        parameters (np.ndarray): Translation vector.
+    """
 
     def __init__(self, translation):
         """

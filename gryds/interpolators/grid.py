@@ -13,7 +13,7 @@ class Grid(object):
     """Sampling grid that can be transformed.
 
     Attributes:
-        self.grid (nd.array): The grid as a nD * Ni * Nj * ... Nn array
+        self.grid (nd.array): The grid as a ndim x Ni x Nj x ... x Nndim array
     """
 
     def __init__(self, shape=None, grid=None):

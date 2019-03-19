@@ -19,7 +19,10 @@ from .linear import LinearTransformation
 class AffineTransformation(LinearTransformation):
     """Affine transformation for 2D or 3D augmented coordinates. Subclasses
     LinearTransformation, as this is merely a filling in of the linear
-    transformation's matrix instance variable."""
+    transformation's matrix instance variable.
+
+    Attributes:
+    """
 
     def __init__(self, ndim, center=None, center_of=None, scaling=None,
                  angles=None, translation=None, shear_matrix=None):

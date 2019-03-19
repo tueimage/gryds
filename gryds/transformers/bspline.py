@@ -13,7 +13,16 @@ from .affine import _center_of
 
 
 class BSplineTransformation(Transformation):
-    """BSpline transformation of points."""
+    """BSpline transformation of points.
+
+    Attributes:
+        ndim (int): The number of dimensions.
+        parameters (np.ndarray): The control point grid in 
+            ndim x Ni x Nj x ... x Nndim format.
+        bspline_order (int): The order of the B-spline.
+        mode (str): How edges of image domain should be treated when transformed.
+        cval (numeric): Constant value for mode='constant'
+    """
 
     def __init__(self, grid, order=3, mode='mirror', cval=0):
         """
@@ -23,7 +32,7 @@ class BSplineTransformation(Transformation):
             order (int): The order of the B-spline. Default is 3. Use 0 for
                 binary images. Use 1 for normal linear interpolation.
             mode (str): How edges of image domain should be treated when
-                transformed of 'constant', 'nearest', 'mirror', 'reflect',
+                transformed. One of 'constant', 'nearest', 'mirror', 'reflect',
                 'wrap'. Default is 'constant'. See https://docs.scipy.org/doc/
                 scipy-0.14.0/reference/generated/
                 scipy.ndimage.interpolation.map_coordinates.html for more

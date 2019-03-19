@@ -24,6 +24,11 @@ class ComposedTransformation(Transformation):
     >>> # With ComposedTransform
     >>> t12 = ComposedTransform(t1, t2)
     >>> x2 = t12.transform(x0)
+
+    Attributes:
+        ndim (int): The number of dimensions.
+        parameters (np.ndarray): Left empty
+        transformations (Iterable): A sequence of Transformation objects
     """
 
     def __init__(self, *transformations):

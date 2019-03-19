@@ -20,6 +20,11 @@ class Transformation(object):
     the [0, 1)^ndim domain. The base class scales the points if necessary to
     this domain using the scale parameter of the transform function supplied by
     the user.
+
+    Attributes:
+        ndim (int): The number of dimensions.
+        parameters (iterable/array): Some array-like representation of the 
+            transformation parameters, dependant on kind of transformation.
     """
 
     def __init__(self, ndim, parameters):

@@ -11,14 +11,18 @@ from .base import Transformation
 
 
 class LinearTransformation(Transformation):
-    """Linear transformation for 2D or 3D augmented coordinates."""
+    """Linear transformation for 2D or 3D augmented coordinates.
+
+    Attributes:
+        ndim (int): The number of dimensions.
+        parameters (np.ndarray): The (ndim) x (ndim + 1) transformation matrix.
+    """
 
     def __init__(self, matrix):
         """
         Args:
             matrix (np.array): An (ndim ) x (ndim + 1) array
-                representing the augmented affine matrix, where ndim is either
-                2 or 3.
+                representing the augmented affine matrix.
         Raises:
             ValueError: If the matrix is not shaped correctly.
         """

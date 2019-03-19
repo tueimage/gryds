@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 #
-# Resample images on a new Grid instance using linear interplation
-# This class is mostly here to test pure linear interpolation implementations
-# but can be mostly ignored for standard code.
+# Resample images on a new Grid instance using linear interplation.
+# This class is mostly here to test pure Numpy implementations of 
+# linear interpolation but can be mostly ignored for standard code.
 
 
 from __future__ import division, print_function, absolute_import
@@ -15,7 +15,12 @@ import numpy as np
 
 
 class LinearInterpolator(Interpolator):
+    """A pure Numpy implementation of linear interpolation.
 
+    Attributes:
+        self.image (np.ndarray): The wrapped ND image.
+        self.grid (Grid): The image's default sampling grid.
+    """
     def __init__(self, image, **kwargs):
         """
         Args:

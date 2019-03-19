@@ -14,7 +14,15 @@ from .base import Interpolator
 
 class BSplineInterpolator(Interpolator):
     """An interpolator for an image that can resample an image on a new grid,
-    or transform an image."""
+    or transform an image.
+
+    Attributes:
+        self.image (np.ndarray): The wrapped ND image.
+        self.grid (Grid): The image's default sampling grid.
+        self.default_mode (str): Determines how edges are treated.
+        self.default_order (int): B-Spline order.
+        self.default_cval (numeric): Constant value for mode='constant'.
+    """
 
     def __init__(self, image, mode='constant', order=3, cval=0):
         """
@@ -28,7 +36,7 @@ class BSplineInterpolator(Interpolator):
                 scipy-0.14.0/reference/generated/
                 scipy.ndimage.interpolation.map_coordinates.html for more
                 information about modes.
-            cval (numeric): Constant value for mode='constant'
+            cval (numeric): Constant value for mode='constant'.
         """
         super(BSplineInterpolator, self).__init__(
             image

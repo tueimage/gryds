@@ -10,7 +10,11 @@ from ..config import DTYPE
 
 
 class Grid(object):
-    """Sampling grid that can be transformed."""
+    """Sampling grid that can be transformed.
+
+    Attributes:
+        self.grid (nd.array): The grid as a nD * Ni * Nj * ... Nn array
+    """
 
     def __init__(self, shape=None, grid=None):
         """

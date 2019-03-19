@@ -14,10 +14,18 @@ import numpy as np
 
 class MultiChannelInterpolator:
     """Wrapper for an interpolator that is applied to each channel of a
-    multi-channel (e.g. color) image."""
+    multi-channel (e.g. color) image.
+
+    Attributes:
+        self.image (np.ndarray): The wrapped ND image.
+        self.grid (Grid): The image's default sampling grid.
+        self.default_mode (str): Determines how edges are treated.
+        self.default_order (int): B-Spline order.
+        self.default_cval (numeric): Constant value for mode='constant'.
+    """
 
     def __init__(self, image, interpolator=BSplineInterpolator,
-            data_format='channels_last', cval=None, **kwargs):
+                 data_format='channels_last', cval=None, **kwargs):
         """
         Args:
             image (np.array): An image array.

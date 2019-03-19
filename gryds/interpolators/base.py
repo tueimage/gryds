@@ -12,13 +12,16 @@ from ..config import DTYPE
 class Interpolator(object):
     """Base class for interpolators, that implements the minimum requirements
     for sampling on grid in new images.
+
+    Attributes:
+        self.image (np.ndarray): The wrapped ND image.
+        self.grid (Grid): The image's default sampling grid.
     """
 
     def __init__(self, image):
         """
         Args:
-            ndim (int): Number of dimensions of the transformation, used for
-                checking the dimensions of points to be transformed.
+            image (np.ndarray): An ND image array.
         """
         self.image = image
         self.grid = Grid(shape=self.image.shape)

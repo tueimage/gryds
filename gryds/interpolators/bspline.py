@@ -6,7 +6,8 @@
 from __future__ import division, print_function, absolute_import
 
 
-import scipy.ndimage as nd
+import cupyx.scipy.ndimage as nd
+import cupy as cp
 from ..config import DTYPE
 from .grid import Grid
 from .base import Interpolator
@@ -67,11 +68,15 @@ class BSplineInterpolator(Interpolator):
         new_order = order if order else self.default_order
         new_cval = cval if cval else self.default_cval
 
-        sample = nd.map_coordinates(self.image, points,
-                                    mode=new_mode,
-                                    order=new_order,
-                                    cval=new_cval)
-        return sample.astype(DTYPE)
+        sample = cp.zeros(self.image.shape)
+        print(self.image.shape, points.shape)
+        nd.map_coordinates(input=cp.array(self.image),
+                           coordinates=cp.array(points),
+                           output=sample,
+                           mode=new_mode,
+                           order=new_order,
+                           cval=new_cval)
+        return np.array(sample.astype(DTYPE))
 
     def resample(self, grid, mode=None, order=None, cval=None):
         """

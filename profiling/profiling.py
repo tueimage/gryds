@@ -8,8 +8,8 @@ from pstats import Stats
 
 prf = Profile()
 
-bsp = gryds.BSplineTransformation(np.random.rand(3, 128, 128, 128), order=3)
-intp = gryds.Interpolator(np.random.rand(256, 256, 256), order=3)
+bsp = gryds.BSplineTransformation(np.random.rand(3, 32, 32, 32), order=1)
+intp = gryds.Interpolator(np.random.rand(64, 64, 64), order=1)
 prf.runcall(intp.transform, bsp)
 
 stats = Stats(prf)

@@ -71,7 +71,6 @@ class BSplineInterpolator(Interpolator):
         #Reshape mesh for the cupy map_coordinates function to
         #receive coordinates in the expected shape
         points = np.transpose(points.reshape(3,-1))
-        print(self.image.shape, points.shape)
         sample_gpu = nd.map_coordinates(input=cp.array(self.image),
                            coordinates=cp.array(points),
                            mode=new_mode,

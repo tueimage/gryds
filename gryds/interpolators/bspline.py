@@ -68,6 +68,8 @@ class BSplineInterpolator(Interpolator):
         new_order = order if order else self.default_order
         new_cval = cval if cval else self.default_cval
 
+        #Reshape mesh for the cupy map_coordinates function to
+        #receive coordinates in the expected shape
         points = np.transpose(points.reshape(3,-1))
         print(self.image.shape, points.shape)
         sample_gpu = nd.map_coordinates(input=cp.array(self.image),

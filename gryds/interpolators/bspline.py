@@ -11,7 +11,7 @@ import cupy as cp
 from ..config import DTYPE
 from .grid import Grid
 from .base import Interpolator
-
+import numpy as np
 
 class BSplineInterpolator(Interpolator):
     """An interpolator for an image that can resample an image on a new grid,
@@ -68,14 +68,14 @@ class BSplineInterpolator(Interpolator):
         new_order = order if order else self.default_order
         new_cval = cval if cval else self.default_cval
 
-        sample = cp.zeros(self.image.shape)
+        points = np.transpose(points.reshape(3,-1))
         print(self.image.shape, points.shape)
-        nd.map_coordinates(input=cp.array(self.image),
+        sample_gpu = nd.map_coordinates(input=cp.array(self.image),
                            coordinates=cp.array(points),
-                           output=sample,
                            mode=new_mode,
                            order=new_order,
                            cval=new_cval)
+        sample = cp.asnumpy(sample_gpu)
         return np.array(sample.astype(DTYPE))
 
     def resample(self, grid, mode=None, order=None, cval=None):

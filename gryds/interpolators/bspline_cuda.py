@@ -6,14 +6,14 @@
 from __future__ import division, print_function, absolute_import
 
 
+import cupyx.scipy.ndimage as nd
+import cupy as cp
 from ..config import DTYPE
 from .grid import Grid
 from .base import Interpolator
 import numpy as np
-import scipy.ndimage as nd
 
-
-class BSplineInterpolator(Interpolator):
+class BSplineInterpolatorCUDA(Interpolator):
     """An interpolator for an image that can resample an image on a new grid,
     or transform an image.
 
@@ -39,7 +39,7 @@ class BSplineInterpolator(Interpolator):
                 information about modes.
             cval (numeric): Constant value for mode='constant'.
         """
-        super(BSplineInterpolator, self).__init__(
+        super(BSplineInterpolatorCUDA, self).__init__(
             image
         )
         self.default_mode = mode
@@ -68,12 +68,16 @@ class BSplineInterpolator(Interpolator):
         new_order = order if order else self.default_order
         new_cval = cval if cval else self.default_cval
 
-        sample = nd.map_coordinates(input=self.image,
-                           coordinates=points,
+        #Reshape mesh for the cupy map_coordinates function to
+        #receive coordinates in the expected shape
+        points = np.transpose(points.reshape(3,-1))
+        sample_gpu = nd.map_coordinates(input=cp.array(self.image),
+                           coordinates=cp.array(points),
                            mode=new_mode,
                            order=new_order,
                            cval=new_cval)
-        return sample.astype(DTYPE)
+        sample = cp.asnumpy(sample_gpu)
+        return np.array(sample.astype(DTYPE))
 
     def resample(self, grid, mode=None, order=None, cval=None):
         """

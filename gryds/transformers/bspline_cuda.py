@@ -25,13 +25,13 @@ class BSplineTransformationCUDA(Transformation):
         cval (numeric): Constant value for mode='constant'
     """
 
-    def __init__(self, grid, order=3, mode='mirror', cval=0):
+    def __init__(self, grid, order=1, mode='mirror', cval=0):
         """
         Args:
             grid (np.array): An (ndim x N1 x N2 x ... Nndim) sized array of
                 displacements for grid points.
-            order (int): The order of the B-spline. Default is 3. Use 0 for
-                binary images. Use 1 for normal linear interpolation.
+            order (int): B-Spline order. Currently, only 0 and 1 are
+                supported.
             mode (str): How edges of image domain should be treated when
                 transformed. One of 'constant', 'nearest', 'mirror', 'reflect',
                 'wrap'. Default is 'constant'. See https://docs.scipy.org/doc/

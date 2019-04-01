@@ -18,12 +18,12 @@ class BSplineInterpolatorCUDA(Interpolator):
     or transform an image.
 
     Attributes:
-        self.image (np.ndarray): The wrapped ND image.
-        self.grid (Grid): The image's default sampling grid.
-        self.default_mode (str): Determines how edges are treated.
-        self.default_order (int): B-Spline order. Currently, only 0 and 1 are
+        image (np.ndarray): The wrapped ND image.
+        grid (Grid): The image's default sampling grid.
+        default_mode (str): Determines how edges are treated.
+        default_order (int): B-Spline order. Currently, only 0 and 1 are
             supported.
-        self.default_cval (numeric): Constant value for mode='constant'.
+        default_cval (numeric): Constant value for mode='constant'.
     """
 
     def __init__(self, image, mode='constant', order=1, cval=0):

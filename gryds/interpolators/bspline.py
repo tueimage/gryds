@@ -16,11 +16,11 @@ class BSplineInterpolator(Interpolator):
     or transform an image.
 
     Attributes:
-        self.image (np.ndarray): The wrapped ND image.
-        self.grid (Grid): The image's default sampling grid.
-        self.default_mode (str): Determines how edges are treated.
-        self.default_order (int): B-Spline order.
-        self.default_cval (numeric): Constant value for mode='constant'.
+        image (np.ndarray): The wrapped ND image.
+        grid (Grid): The image's default sampling grid.
+        default_mode (str): Determines how edges are treated.
+        default_order (int): B-Spline order.
+        default_cval (numeric): Constant value for mode='constant'.
     """
 
     def __init__(self, image, mode='constant', order=3, cval=0):

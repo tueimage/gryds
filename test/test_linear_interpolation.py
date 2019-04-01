@@ -94,7 +94,7 @@ class TestLinearInterpolator(TestCase):
         ], dtype=DTYPE) # Borders will be zero due to being outside of image domain
         intp = gryds.LinearInterpolator(image)
         trf = gryds.AffineTransformation(ndim=2, angles=[np.pi/4.], center=[0.4, 0.4])
-        new_image = intp.transform(trf, mode='nope').astype(DTYPE)
+        new_image = intp.transform(trf).astype(DTYPE)
         np.testing.assert_almost_equal(expected, new_image, decimal=4)
 
     def test_linear_interpolator_sampling(self):
@@ -108,7 +108,7 @@ class TestLinearInterpolator(TestCase):
         ], dtype=DTYPE)
         intp = gryds.LinearInterpolator(image)
 
-        np.testing.assert_equal(intp.sample([0, 2.5], mode='NOPE'), 0.5)
+        np.testing.assert_equal(intp.sample([0, 2.5]), 0.5)
 
 
     def test_linear_interpolator_error(self):

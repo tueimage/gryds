@@ -68,7 +68,7 @@ class BSplineTransformation(Transformation):
 
         # Reshape points for the cupy map_coordinates function to
         # receive coordinates in the expected shape
-        points_gpu = np.transpose(points.reshape(self.ndim, -1))
+        points_gpu = points.reshape(self.ndim, -1)
 
         # Points is in the [0, 1)^ndim domain. Here it is scaled to the
         # B-spline grid's size.

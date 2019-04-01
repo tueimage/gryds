@@ -71,16 +71,16 @@ class BSplineInterpolatorCUDA(Interpolator):
 
         # Reshape points for the cupy map_coordinates function to
         # receive coordinates in the expected shape
-        points = np.transpose(points.reshape(self.image.ndim, -1))
+        points_gpu = np.transpose(points.reshape(self.image.ndim, -1))
         sample_gpu = nd.map_coordinates(input=cp.array(self.image),
-                                        coordinates=cp.array(points),
+                                        coordinates=cp.array(points_gpu),
                                         mode=new_mode,
                                         order=new_order,
                                         cval=new_cval)
 
         # Convert back to CPU array and reshape to original shape
         sample_cpu = cp.asnumpy(sample_gpu)
-        sample = sample_cpu.reshape(self.image.shape)
+        sample = sample_cpu.reshape(points.shape)
         return np.array(sample.astype(DTYPE))
 
     def resample(self, grid, mode=None, order=None, cval=None):

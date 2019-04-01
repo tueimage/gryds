@@ -79,14 +79,15 @@ class BSplineTransformationCUDA(Transformation):
         # interpolated at the scaled point's positions.
         for bspline_component in self.parameters:
             displacement.append(
-                nd.map_coordinates(input=cp.array(bspline_component),
+                cp.asnumpy(
+                    nd.map_coordinates(input=cp.array(bspline_component),
                                    coordinates=cp.array(scaled_points),
                                    order=self.bspline_order,
                                    mode=self.mode,
                                    cval=self.cval)
+                )
             )
-        result_gpu = (points_gpu + cp.array(displacement))
+        result = points + np.array(displacement).reshape(points.shape)
 
-        result = cp.asnumpy(result_gpu).reshape(points.shape)
         assert result.dtype == DTYPE
         return result

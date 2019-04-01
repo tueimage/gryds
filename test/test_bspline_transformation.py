@@ -42,8 +42,8 @@ class TestBSplineTransformation(TestCase):
 
         # The grid runs from 0 to 0.9 on the i-axis
         # Translation by 100% will mean that the i-axis will now run from 1 to 1.9
-        np.testing.assert_equal(new_grid.grid[0, 0, 0], np.array(1, DTYPE))
-        np.testing.assert_almost_equal(new_grid.grid[0, -1, 0], np.array(1.6666667, DTYPE))
+        np.testing.assert_equal(new_grid.grid[0, 0, 0, 0, 0], np.array(1, DTYPE))
+        np.testing.assert_almost_equal(new_grid.grid[0, -1, 0, 0, 0], np.array(1.6666667, DTYPE))
 
         # The jacobian of this transformation should be 1 everywhere, i.e. no
         # scaling should have happened

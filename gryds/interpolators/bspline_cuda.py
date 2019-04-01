@@ -80,7 +80,7 @@ class BSplineInterpolatorCUDA(Interpolator):
 
         # Convert back to CPU array and reshape to original shape
         sample_cpu = cp.asnumpy(sample_gpu)
-        sample = sample_cpu.transpose().reshape(points.shape)
+        sample = sample_cpu.transpose().reshape(points.shape[1:])
         return np.array(sample.astype(DTYPE))
 
     def resample(self, grid, mode=None, order=None, cval=None):

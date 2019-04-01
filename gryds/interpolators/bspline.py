@@ -5,12 +5,10 @@
 
 from __future__ import division, print_function, absolute_import
 
-
+import scipy.ndimage as nd
 from ..config import DTYPE
 from .grid import Grid
 from .base import Interpolator
-import numpy as np
-import scipy.ndimage as nd
 
 
 class BSplineInterpolator(Interpolator):

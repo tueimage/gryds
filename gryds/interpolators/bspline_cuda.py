@@ -5,13 +5,13 @@
 
 from __future__ import division, print_function, absolute_import
 
-
+import numpy as np
 import cupyx.scipy.ndimage as nd
 import cupy as cp
 from ..config import DTYPE
 from .grid import Grid
 from .base import Interpolator
-import numpy as np
+
 
 class BSplineInterpolatorCUDA(Interpolator):
     """An interpolator for an image that can resample an image on a new grid,
@@ -21,15 +21,16 @@ class BSplineInterpolatorCUDA(Interpolator):
         self.image (np.ndarray): The wrapped ND image.
         self.grid (Grid): The image's default sampling grid.
         self.default_mode (str): Determines how edges are treated.
-        self.default_order (int): B-Spline order.
+        self.default_order (int): B-Spline order. Currently, only 0 and 1 are
+            supported.
         self.default_cval (numeric): Constant value for mode='constant'.
     """
 
-    def __init__(self, image, mode='constant', order=3, cval=0):
+    def __init__(self, image, mode='constant', order=1, cval=0):
         """
         Args:
             image (np.array): An image array.
-            order (int): The order of the B-spline. Default is 3. Use 0 for
+            order (int): The order of the B-spline. Default is 1. Use 0 for
                 binary images. Use 1 for normal linear interpolation.
             mode (str): How edges of image domain should be treated when
                 transformed of 'constant', 'nearest', 'mirror', 'reflect',
@@ -68,15 +69,18 @@ class BSplineInterpolatorCUDA(Interpolator):
         new_order = order if order else self.default_order
         new_cval = cval if cval else self.default_cval
 
-        #Reshape mesh for the cupy map_coordinates function to
-        #receive coordinates in the expected shape
-        points = np.transpose(points.reshape(3,-1))
+        # Reshape points for the cupy map_coordinates function to
+        # receive coordinates in the expected shape
+        points = np.transpose(points.reshape(3, -1))
         sample_gpu = nd.map_coordinates(input=cp.array(self.image),
-                           coordinates=cp.array(points),
-                           mode=new_mode,
-                           order=new_order,
-                           cval=new_cval)
-        sample = cp.asnumpy(sample_gpu)
+                                        coordinates=cp.array(points),
+                                        mode=new_mode,
+                                        order=new_order,
+                                        cval=new_cval)
+
+        # Convert back to CPU array and reshape to original shape
+        sample_cpu = cp.asnumpy(sample_gpu)
+        sample = sample_cpu.reshape(self.image.shape)
         return np.array(sample.astype(DTYPE))
 
     def resample(self, grid, mode=None, order=None, cval=None):

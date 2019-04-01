@@ -6,7 +6,8 @@
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
-import scipy.ndimage as nd
+import cupy as cp
+import cupyx.scipy.ndimage as nd
 from ..config import DTYPE
 from .base import Transformation
 from .affine import _center_of
@@ -65,20 +66,27 @@ class BSplineTransformation(Transformation):
         # Empty list for the interpolated B-spline grid's components.
         displacement = []
 
+        # Reshape points for the cupy map_coordinates function to
+        # receive coordinates in the expected shape
+        points_gpu = np.transpose(points.reshape(3, -1))
+
         # Points is in the [0, 1)^ndim domain. Here it is scaled to the
         # B-spline grid's size.
-        scaled_points = points * (
+        scaled_points = points_gpu * (
             np.array(self.parameters.shape[1:], dtype=DTYPE) - 1)[:, None]
 
         # Every component (e.g. Tx, Ty, Tz in 3D) of the B-spline grid is
         # interpolated at the scaled point's positions.
         for bspline_component in self.parameters:
             displacement.append(
-                nd.map_coordinates(bspline_component, scaled_points,
+                nd.map_coordinates(input=cp.array(bspline_component),
+                                   coordinates=cp.array(scaled_points),
                                    order=self.bspline_order,
                                    mode=self.mode,
                                    cval=self.cval)
             )
-        result = (points + np.array(displacement))
-        assert result.dtype == DTYPE
+        result_gpu = (points + displacement)
+        assert result_gpu.dtype == DTYPE
+
+        result = result_gpu.reshape(points)
         return result

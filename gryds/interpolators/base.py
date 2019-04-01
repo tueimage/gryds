@@ -11,7 +11,7 @@ from ..config import DTYPE
 
 class Interpolator(object):
     """Base class for interpolators, that implements the minimum requirements
-    for sampling on grid in new images.
+    for sampling on grids in new images.
 
     Attributes:
         self.image (np.ndarray): The wrapped ND image.

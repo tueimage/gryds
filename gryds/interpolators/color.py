@@ -5,11 +5,10 @@
 
 from __future__ import division, print_function, absolute_import
 
+import numpy as np
 from ..config import DTYPE
 from .grid import Grid
 from .bspline import BSplineInterpolator
-
-import numpy as np
 
 
 class MultiChannelInterpolator:

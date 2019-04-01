@@ -44,11 +44,11 @@ class TestLinearInterpolator(TestCase):
             [0, 0, 1, 0, 0]
         ], dtype=DTYPE)
         expected = np.array([
-            [0, 0, 0., 0, 0],
-            [0., 1., 0.5, 1., 0.],
+            [1., 0.2929, 0., 0.2929, 1.],
+            [0.2929, 1., 0.5, 1., 0.2929],
             [0., 0.5, 1., 0.5, 0.],
-            [0., 1., 0.5, 1., 0.],
-            [0., 0., 0., 0., 0.]
+            [0.2929, 1., 0.5, 1., 0.2929],
+            [1., 0.2929, 0., 0.2929, 1.]
         ], dtype=DTYPE) # Borders will be zero due to being outside of image domain
         intp = gryds.interpolators.bspline_cuda.BSplineInterpolatorCUDA(image, mode='mirror')
         trf = gryds.AffineTransformation(ndim=2, angles=[np.pi/4.], center=[0.4, 0.4])

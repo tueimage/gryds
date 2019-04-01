@@ -13,7 +13,7 @@ from .grid import Grid
 from .base import Interpolator
 
 
-class BSplineInterpolatorCUDA(Interpolator):
+class BSplineInterpolatorCuda(Interpolator):
     """An interpolator for an image that can resample an image on a new grid,
     or transform an image.
 
@@ -40,7 +40,7 @@ class BSplineInterpolatorCUDA(Interpolator):
                 information about modes.
             cval (numeric): Constant value for mode='constant'.
         """
-        super(BSplineInterpolatorCUDA, self).__init__(
+        super(BSplineInterpolatorCuda, self).__init__(
             image
         )
         self.default_mode = mode

@@ -8,14 +8,14 @@ sys.path.append(os.path.abspath('../gryds'))
 from unittest import TestCase
 import numpy as np
 import gryds
-import gryds.interpolators.bspline_cuda
+import gryds.interpolators.cuda
 DTYPE = gryds.DTYPE
 
 
 class TestBSplineCudaInterpolator(TestCase):
     """Tests grid initialization and scaling."""
     
-    def test_2d_bspline_cuda_interpolator_90_deg_rotation(self):
+    def test_2d_cuda_interpolator_90_deg_rotation(self):
         image = np.array([
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
@@ -30,12 +30,12 @@ class TestBSplineCudaInterpolator(TestCase):
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0]
         ], dtype=DTYPE) # Borders will be zero due to being outside of image domain
-        intp = gryds.interpolators.bspline_cuda.BSplineInterpolatorCUDA(image)
+        intp = gryds.interpolators.cuda.BSplineInterpolatorCuda(image)
         trf = gryds.AffineTransformation(ndim=2, angles=[np.pi/2.], center=[0.4, 0.4])
         new_image = intp.transform(trf).astype(DTYPE)
         np.testing.assert_almost_equal(expected, new_image, decimal=4)
 
-    def test_2d_bspline_cuda_interpolator_45_deg_rotation(self):
+    def test_2d_cuda_interpolator_45_deg_rotation(self):
         image = np.array([
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
@@ -50,12 +50,12 @@ class TestBSplineCudaInterpolator(TestCase):
             [0, 1., 0.5, 1., 0],
             [0, 0, 0, 0, 0]
         ], dtype=DTYPE) # Borders will be zero due to being outside of image domain
-        intp = gryds.interpolators.bspline_cuda.BSplineInterpolatorCUDA(image)
+        intp = gryds.interpolators.cuda.BSplineInterpolatorCuda(image)
         trf = gryds.AffineTransformation(ndim=2, angles=[np.pi/4.], center=[0.4, 0.4])
         new_image = intp.transform(trf).astype(DTYPE)
         np.testing.assert_almost_equal(expected, new_image, decimal=4)
 
-    def test_3d_bspline_cuda_interpolator_90_deg_rotation(self):
+    def test_3d_cuda_interpolator_90_deg_rotation(self):
         image = np.zeros((2, 5, 5))
         image[1] = np.array([[
             [0, 0, 1, 0, 0],
@@ -74,12 +74,12 @@ class TestBSplineCudaInterpolator(TestCase):
             [0, 0, 1, 0, 0]
         ], dtype=DTYPE) # Borders will be zero due to being outside of image domain
         expected[1] = expected[0]
-        intp = gryds.interpolators.bspline_cuda.BSplineInterpolatorCUDA(image)
+        intp = gryds.interpolators.cuda.BSplineInterpolatorCuda(image)
         trf = gryds.AffineTransformation(ndim=3, angles=[np.pi/2., 0, 0], center=[0.4, 0.4, 0.4])
         new_image = intp.transform(trf).astype(DTYPE)
         np.testing.assert_almost_equal(expected, new_image, decimal=4)
 
-    def test_3d_bspline_cuda_interpolator_45_deg_rotation(self):
+    def test_3d_cuda_interpolator_45_deg_rotation(self):
         image = np.array([
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
@@ -94,7 +94,7 @@ class TestBSplineCudaInterpolator(TestCase):
             [0., 1., 0.5, 1., 0.],
             [0., 0., 0., 0., 0.]
         ], dtype=DTYPE) # Borders will be zero due to being outside of image domain
-        intp = gryds.interpolators.bspline_cuda.BSplineInterpolatorCUDA(image)
+        intp = gryds.interpolators.cuda.BSplineInterpolatorCuda(image)
         trf = gryds.AffineTransformation(ndim=2, angles=[np.pi/4.], center=[0.4, 0.4])
         new_image = intp.transform(trf).astype(DTYPE)
         np.testing.assert_almost_equal(expected, new_image, decimal=4)

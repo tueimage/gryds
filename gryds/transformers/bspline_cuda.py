@@ -85,7 +85,7 @@ class BSplineTransformationCUDA(Transformation):
                                    mode=self.mode,
                                    cval=self.cval)
             )
-        result_gpu = (points + displacement)
+        result_gpu = (points_gpu + cp.array(displacement))
         assert result_gpu.dtype == DTYPE
 
         result = result_gpu.reshape(points)

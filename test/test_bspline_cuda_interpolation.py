@@ -96,5 +96,5 @@ class TestBSplineCudaInterpolator(TestCase):
         ], dtype=DTYPE) # Borders will be zero due to being outside of image domain
         intp = gryds.interpolators.bspline_cuda.BSplineInterpolatorCUDA(image)
         trf = gryds.AffineTransformation(ndim=2, angles=[np.pi/4.], center=[0.4, 0.4])
-        new_image = intp.transform(trf, mode='nope').astype(DTYPE)
+        new_image = intp.transform(trf).astype(DTYPE)
         np.testing.assert_almost_equal(expected, new_image, decimal=4)

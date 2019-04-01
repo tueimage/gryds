@@ -13,7 +13,7 @@ from .base import Transformation
 from .affine import _center_of
 
 
-class BSplineTransformation(Transformation):
+class BSplineTransformationCUDA(Transformation):
     """BSpline transformation of points.
 
     Attributes:
@@ -49,7 +49,7 @@ class BSplineTransformation(Transformation):
         self.bspline_order = order
         self.mode = mode
         self.cval = cval
-        super(BSplineTransformation, self).__init__(
+        super(BSplineTransformationCUDA, self).__init__(
             ndim=len(grid),
             parameters=grid
         )

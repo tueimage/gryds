@@ -98,3 +98,13 @@ class TestBSplineCudaInterpolator(TestCase):
         trf = gryds.AffineTransformation(ndim=2, angles=[np.pi/4.], center=[0.4, 0.4])
         new_image = intp.transform(trf).astype(DTYPE)
         np.testing.assert_almost_equal(expected, new_image, decimal=4)
+
+    def test_normal_bspline_equal(self):
+        bsp = gryds.BSplineTransformation(0.01 * (np.random.rand(2, 32, 32) - 0.5), order=1)
+        image = np.zeros((128, 128))
+        image[32:-32] = 0.5
+        image[:, 32:-32] += 0.5
+        intp_cpu = gryds.BSplineInterpolator(image, order=1).transform(bsp)
+        intp_gpu = gryds.interpolators.cuda.BSplineInterpolatorCuda(image).transform(bsp)
+        np.testing.assert_equal(intp_cpu, intp_gpu)
+

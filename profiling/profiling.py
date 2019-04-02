@@ -5,6 +5,7 @@ import gryds
 import numpy as np
 from cProfile import Profile
 from pstats import Stats
+import gryds.interpolators.cuda
 
 
 # bsp = gryds.BSplineTransformation(np.random.rand(3, 32, 32, 32), order=1)
@@ -16,7 +17,7 @@ intp = gryds.BSplineInterpolator(image, order=1)
 prf.runcall(intp.transform, bsp)
 
 prf_cuda = Profile()
-intp_cuda = gryds.BSplineInterpolatorCUDA(image, order=1)
+intp_cuda = gryds.interpolators.cuda.BSplineInterpolatorCuda(image, order=1)
 prf_cuda.runcall(intp_cuda.transform, bsp)
 
 stats = Stats(prf)

@@ -11,3 +11,4 @@ from .linear import LinearTransformation
 from .affine import AffineTransformation
 from .bspline import BSplineTransformation
 from .base import Transformation
+from .cuda import BSplineTransformationCuda

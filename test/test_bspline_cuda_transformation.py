@@ -8,7 +8,6 @@ sys.path.append(os.path.abspath('../gryds'))
 from unittest import TestCase
 import numpy as np
 import gryds
-import gryds.transformers.cuda
 DTYPE = gryds.DTYPE
 
 
@@ -17,7 +16,7 @@ class TestBSplineCudaTransformation(TestCase):
 
     def test_translation_bspline_2d(self):
         bspline_grid = np.ones((2, 2, 2))
-        trf = gryds.transformers.cuda.BSplineTransformationCuda(bspline_grid)
+        trf = gryds.transformers.BSplineTransformationCuda(bspline_grid)
 
         grid = gryds.Grid((10, 20))
         new_grid = grid.transform(trf)
@@ -36,7 +35,7 @@ class TestBSplineCudaTransformation(TestCase):
 
     def test_translation_bspline_5d(self):
         bspline_grid = np.ones((5, 2, 2, 2, 2, 2))
-        trf = gryds.transformers.cuda.BSplineTransformationCuda(bspline_grid)
+        trf = gryds.transformers.BSplineTransformationCuda(bspline_grid)
 
         grid = gryds.Grid((3, 3, 3, 3, 3))
         new_grid = grid.transform(trf)
@@ -58,7 +57,7 @@ class TestBSplineCudaTransformation(TestCase):
             [[0.1, 0], [0, 0]],
             [[0, 0], [0, 0]]
         ])
-        trf = gryds.transformers.cuda.BSplineTransformationCuda(bspline_grid)
+        trf = gryds.transformers.BSplineTransformationCuda(bspline_grid)
 
         grid = gryds.Grid((10, 20))
         new_grid = grid.transform(trf)
@@ -76,7 +75,7 @@ class TestBSplineCudaTransformation(TestCase):
             [[0.51, 0.51], [-0.5, -0.5]], # Folds the top half of the image slightly over the bottom half.
             [[0, 0], [0, 0]]
         ])
-        trf = gryds.transformers.cuda.BSplineTransformationCuda(bspline_grid, order=1)
+        trf = gryds.transformers.BSplineTransformationCuda(bspline_grid, order=1)
 
         grid = gryds.Grid((100, 20))
 
@@ -85,4 +84,4 @@ class TestBSplineCudaTransformation(TestCase):
 
     def test_bspline_wrong_grid_size(self):
         bspline_grid = np.random.rand(3, 10, 10)
-        self.assertRaises(ValueError, gryds.transformers.cuda.BSplineTransformationCuda, bspline_grid)
+        self.assertRaises(ValueError, gryds.transformers.BSplineTransformationCuda, bspline_grid)

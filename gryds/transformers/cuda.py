@@ -10,10 +10,10 @@ import cupy as cp
 import cupyx.scipy.ndimage as nd
 from ..config import DTYPE
 from .base import Transformation
-from .affine import _center_of
+from .bspline import BSplineTransformation
 
 
-class BSplineTransformationCuda(Transformation):
+class BSplineTransformationCuda(BSplineTransformation):
     """BSpline transformation of points.
 
     Attributes:
@@ -42,23 +42,11 @@ class BSplineTransformationCuda(Transformation):
         Raises:
             ValueError: If grid.shape[0] is not equal to grid.ndim -1
         """
-        grid = np.array(grid, dtype=DTYPE)
-        if grid.shape[0] is not grid.ndim - 1:
-            raise ValueError('First axis of grid should be equal to '
-                             'transform\'s ndim {}.'.format(grid.ndim - 1))
-        self.bspline_order = order
-        self.mode = mode
-        self.cval = cval
         super(BSplineTransformationCuda, self).__init__(
-            ndim=len(grid),
-            parameters=grid
-        )
-
-    def __repr__(self):
-        return '{}({}D, {})'.format(
-            self.__class__.__name__,
-            self.ndim,
-            'x'.join([str(x) for x in self.parameters.shape[1:]])
+            grid=grid,
+            order=order,
+            mode=mode,
+            cval=cval
         )
 
     def _transform_points(self, points):

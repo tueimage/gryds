@@ -11,9 +11,10 @@ import cupy as cp
 from ..config import DTYPE
 from .grid import Grid
 from .base import Interpolator
+from .bspline import BSplineInterpolator
 
 
-class BSplineInterpolatorCuda(Interpolator):
+class BSplineInterpolatorCuda(BSplineInterpolator):
     """An interpolator for an image that can resample an image on a new grid,
     or transform an image.
 
@@ -41,11 +42,8 @@ class BSplineInterpolatorCuda(Interpolator):
             cval (numeric): Constant value for mode='constant'.
         """
         super(BSplineInterpolatorCuda, self).__init__(
-            image
+            image, mode=mode, order=order, cval=cval
         )
-        self.default_mode = mode
-        self.default_order = order
-        self.default_cval = cval
 
     def sample(self, points, mode=None, order=None, cval=None):
         """
@@ -83,55 +81,3 @@ class BSplineInterpolatorCuda(Interpolator):
         sample = sample_cpu.transpose().reshape(points.shape[1:])
         return np.array(sample.astype(DTYPE))
 
-    def resample(self, grid, mode=None, order=None, cval=None):
-        """
-        Reamples the image at a given grid.
-
-        Args:
-            grid (Grid): The new grid.
-            order (int): The order of the B-spline. Default is 3. Use 0 for
-                binary images. Use 1 for normal linear interpolation.
-            mode (str): How edges of image domain should be treated when
-                transformed of 'constant', 'nearest', 'mirror', 'reflect',
-                'wrap'. Default is 'constant'. See https://docs.scipy.org/doc/
-                scipy-0.14.0/reference/generated/
-                scipy.ndimage.interpolation.map_coordinates.html for more
-                information about modes.
-            cval (numeric): Constant value for mode='constant'
-        Returns:
-            np.array: The resampled image at the new grid.
-        """
-        rescaled_grid = grid.scaled_to(self.image.shape)
-        new_image = self.sample(rescaled_grid.grid,
-                                mode=mode,
-                                order=order,
-                                cval=cval)
-        return new_image.astype(DTYPE)
-
-    def transform(self, *transforms, **kwargs):
-        """
-        Transforms the image by transforming the original image's grid and
-        resampling the image at the transformed grid.
-
-        Args:
-            *transforms (list): A list of Transform objects.
-            order (int): The order of the B-spline. Default is 3. Use 0 for
-                binary images. Use 1 for normal linear interpolation.
-            mode (str): How edges of image domain should be treated when
-                transformed of 'constant', 'nearest', 'mirror', 'reflect',
-                'wrap'. Default is 'constant'. See https://docs.scipy.org/doc/
-                scipy-0.14.0/reference/generated/
-                scipy.ndimage.interpolation.map_coordinates.html for more
-                information about modes.
-            cval (numeric): Constant value for mode='constant'
-        Returns:
-            np.array: The transformed image.
-        """
-        mode = kwargs['mode'] if 'mode' in kwargs else None
-        order = kwargs['order'] if 'order' in kwargs else None
-        cval = kwargs['cval'] if 'cval' in kwargs else None
-
-        transformed_grid = self.grid.transform(*transforms)
-        new_grid = self.resample(transformed_grid,
-                                 mode=mode, order=order, cval=cval)
-        return new_grid.astype(DTYPE)

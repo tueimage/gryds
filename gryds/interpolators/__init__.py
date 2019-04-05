@@ -10,4 +10,9 @@ from .bspline import BSplineInterpolator
 from .linear import LinearInterpolator
 from .color import MultiChannelInterpolator
 
+try:
+	from .cuda import BSplineInterpolatorCuda
+except ImportError:
+	pass
+
 Interpolator = BSplineInterpolator  # Default interpolator

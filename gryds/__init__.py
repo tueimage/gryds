@@ -9,3 +9,8 @@ from .transformers import *
 from .interpolators import *
 from .utils import dvf_show, dvf_opts
 from .config import DTYPE
+
+try:
+	from .cuda import BSplineTransformationCuda
+except ImportError:
+	pass

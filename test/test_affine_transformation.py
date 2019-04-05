@@ -15,7 +15,7 @@ class TestRotation(TestCase):
     """Tests rotation, and associated effect on grids and Jacobians"""
 
     def test_2d_90_deg_rotation(self):
-        trf = gryds.AffineTransformation(ndim=2, angles=[0.5 * np.pi]) # rotate grid 90° clockwise
+        trf = gryds.AffineTransformation(ndim=2, angles=[0.5 * np.pi]) # rotate grid 90 degrees clockwise
 
         grid = gryds.Grid((10, 20))
         new_grid = grid.transform(trf)
@@ -33,7 +33,7 @@ class TestRotation(TestCase):
             decimal=4)
 
     def test_2d_45_deg_rotation(self):
-        trf = gryds.AffineTransformation(ndim=2, angles=[0.25 * np.pi]) # rotate grid 90° anticlockwise
+        trf = gryds.AffineTransformation(ndim=2, angles=[0.25 * np.pi]) # rotate grid 90 degrees anticlockwise
 
         grid = gryds.Grid((10, 20))
         new_grid = grid.transform(trf)
@@ -54,7 +54,7 @@ class TestRotation(TestCase):
             decimal=5)
 
     def test_3d_90_deg_rotation(self):
-        trf = gryds.AffineTransformation(ndim=3, angles=[0, 0.5 * np.pi, 0]) # rotate grid 90° anticlockwise
+        trf = gryds.AffineTransformation(ndim=3, angles=[0, 0.5 * np.pi, 0]) # rotate grid 90 degrees anticlockwise
 
         grid = gryds.Grid((10, 20, 20))
         new_grid = grid.transform(trf)
@@ -76,7 +76,7 @@ class TestRotation(TestCase):
             decimal=5)
 
     def test_3d_45_deg_rotation(self):
-        trf = gryds.AffineTransformation(ndim=3, angles=[0, 0.25 * np.pi, 0]) # rotate grid 45° anticlockwise
+        trf = gryds.AffineTransformation(ndim=3, angles=[0, 0.25 * np.pi, 0]) # rotate grid 45 degrees anticlockwise
 
         grid = gryds.Grid((10, 20, 20))
         new_grid = grid.transform(trf)
@@ -103,7 +103,7 @@ class TestRotation(TestCase):
             ndim=3,
             angles=[0, 0.25 * np.pi, 0],
             center_of=np.zeros((10, 20, 20))
-        ) # rotate grid 45° anticlockwise
+        ) # rotate grid 45 degrees anticlockwise
 
         grid = gryds.Grid((10, 20, 20))
 

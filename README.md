@@ -20,14 +20,14 @@ If you use this package in academic research, please cite the following paper:
 *[K.A.J. Eppenhof and J.P.W. Pluim, Plumonary CT Registration through Supervised Learning with Convolutional Neural Networks, IEEE Transactions on Medical Imaging, 2018](https://www.doi.org/10.1109/TMI.2018.2878316)*
 
 ```bibtex
-@article{EppenhofPluimTMI2018,
+@article{EppenhofPluimTMI2019,
     author={K. A. J. Eppenhof and J. P. W. Pluim}, 
     journal={IEEE Transactions on Medical Imaging}, 
     title={Pulmonary CT Registration through Supervised Learning with Convolutional Neural Networks}, 
-    year={2018}, 
-    volume={}, 
-    number={}, 
-    pages={In press},
+    year={2019}, 
+    volume={38}, 
+    number={5}, 
+    pages={1097-1105},
     doi={10.1109/TMI.2018.2878316}, 
 }
 ```

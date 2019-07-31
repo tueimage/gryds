@@ -104,11 +104,14 @@ interpolator = gryds.Interpolator(image)
 transformed_image = interpolator.transform(bspline, affine)
 ```
 
+### GPU acceleration
+
+Gryds supports GPU acceleration for B-spline interpolation and B-spline transformations. For details, we refer to the GPU-support notebook [here](https://nbviewer.jupyter.org/github/tueimage/gryds/blob/master/notebooks/gpu_support.ipynb).
+
 ### Why does Gryds apply the inverse transformation to my images?
 
 Gryds applies the transformation to sampling grids (hence the name) that
 are super-imposed on the image. When you apply a transformation to an `Interpolation`
-object with the `transform()` method, the *image grid is transformed*. The transformed grid is then used to
-interpolate the resulting image. For example, if a transformation rotates a grid to anti-clockwise by 45°, the image will be rotated 45° clockwise. The follow example clarifies this:
+object with the `transform()` method, the *image grid is transformed*. The transformed grid is then used to interpolate the resulting image. For example, if a transformation rotates a grid to anti-clockwise by 45°, the image will be rotated 45° clockwise. The follow example clarifies this:
 
 ![](grid_examples.png)

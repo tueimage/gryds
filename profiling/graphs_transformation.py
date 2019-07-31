@@ -6,21 +6,19 @@ import numpy as np
 from cProfile import Profile
 from pstats import Stats
 import time
-from gryds.interpolators import cuda
-from gryds.transformers import cuda as cuda_trf
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 
 bsp = gryds.BSplineTransformation(0.01 * (np.random.rand(3, 2, 2, 2) - 0.5), order=1)
-bsp_cuda = cuda_trf.BSplineTransformationCuda(0.01 * (np.random.rand(3, 2, 2, 2) - 0.5), order=1)
+bsp_cuda = gryds.BSplineTransformationCuda(0.01 * (np.random.rand(3, 2, 2, 2) - 0.5), order=1)
 N = 1
 
 Ns = range(0, 151, 1)
 M = 2
 
 image = np.random.rand(N, 128, 128)
-intp = cuda.BSplineInterpolatorCuda(image)
+intp = gryds.BSplineInterpolatorCuda(image)
 intp.transform(bsp)
 
 times = []
@@ -42,7 +40,7 @@ for i in range(M):
     for N in Ns:
         print(i, N)
         image = np.random.rand(N, 128, 128)
-        intp = cuda.BSplineInterpolatorCuda(image, order=1)
+        intp = gryds.BSplineInterpolatorCuda(image, order=1)
         t0 = time.time()
         intp.transform(bsp_cuda)
         ts.append(time.time() - t0)

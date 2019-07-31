@@ -116,3 +116,9 @@ class TestLinearInterpolator(TestCase):
         image = np.random.rand(3, 3, 3, 3)
         self.assertRaises(ValueError, gryds.LinearInterpolator, image)
 
+
+    def test_linear_interpolator_warning(self):
+        image = np.random.rand(3, 3, 3)
+        grid = gryds.Grid(image.shape)
+        gryds.LinearInterpolator(image).resample(grid, some_kwarg=42)
+
